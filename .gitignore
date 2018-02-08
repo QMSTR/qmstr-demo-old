@@ -1,0 +1,6 @@
+**/*.o
+**/*.so
+calc/Calculator/calc
+calc/json-c
+curl/ana_curl.yaml
+curl/curl
