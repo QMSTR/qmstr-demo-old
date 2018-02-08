@@ -1,0 +1,7 @@
+selector: sourcecode
+analyzer: spdx
+pathsub:
+  - old: "SOURCEDIR"
+    new: "/buildroot"
+config:
+  foo: bar
