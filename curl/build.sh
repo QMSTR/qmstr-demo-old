@@ -5,7 +5,7 @@ source ../build.inc
 init
 run_qmstr_master
 
-setup_git_src https://git.fsfe.org/jonas/curl.git reuse-compliant curl 
+setup_git_src https://git.fsfe.org/jonas/curl.git reuse-compliant curl
 
 pushd curl
 git clean -fxd
@@ -27,5 +27,9 @@ echo "curl built"
 echo "starting analysis"
 
 popd
-sed "s#SOURCEDIR#$(pwd)#" ana.yaml > ana_curl.yaml
-qmstr-cli analyze ana_curl.yaml
+sed "s#SOURCEDIR#$(pwd)#" ana.tmpl > ana.yaml
+qmstr-cli analyze ana.yaml
+
+sleep 5
+qmstr-cli report rep_license.yaml
+

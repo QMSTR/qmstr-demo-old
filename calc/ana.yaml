@@ -1,0 +1,7 @@
+selector: sourcecode
+analyzer: spdx
+pathsub:
+  - old: "/home/markus/devel/endocode/QMSTR/qmstr-all/qmstr-demo/calc"
+    new: "/buildroot"
+config:
+  foo: bar
