@@ -3,6 +3,7 @@ set -e
 
 source ../build.inc
 init
+sed "s#SOURCEDIR#$(pwd)#" qmstr.tmpl > qmstr.yaml
 run_qmstr_master
 
 JSONC_BRANCH="master"
@@ -29,9 +30,7 @@ make clean
 export LIBRARY_PATH
 make -j4
 
-popd
-sed "s#SOURCEDIR#$(pwd)#" ana.tmpl > ana.yaml
-qmstr-cli analyze ana.yaml
-qmstr-cli report rep_license.yaml
+qmstr-cli analyze
+qmstr-cli report
 
 echo "Build finished. Don't forget to quit the qmstr-master server."

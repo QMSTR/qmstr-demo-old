@@ -7,7 +7,7 @@ function run_qmstr_dev() {
         echo "Please set QMSTR_SRC to point to your qmstr source directory."
         exit 2
     fi
-    docker run --name qmstr-demo-master --rm -d -p 50051:50051 -p 8000:8000 -p 8080:8080 -v "${QMSTR_SRC}":/go/src/github.com/QMSTR/qmstr -v $(pwd):/buildroot qmstr/dev
+    docker run --name qmstr-demo-master --rm -d -p 50051:50051 -p 8000:8000 -p 8080:8080 -p 2345:2345 -v "${QMSTR_SRC}":/go/src/github.com/QMSTR/qmstr -v $(pwd):/buildroot qmstr/dev
 
 }
 
