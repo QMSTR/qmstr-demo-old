@@ -1,13 +1,15 @@
 function run_qmstr_prod() {
+    echo "Running qmstr-master container"
     docker run --rm -d -p 50051:50051 -v $(pwd):/buildroot qmstr/master
 }
 
 function run_qmstr_dev() {
-    if [ -z "$QMSTR_SRC" ]; then
-        echo "Please set QMSTR_SRC to point to your qmstr source directory."
+    if [ -z "$GOPATH" ]; then
+        echo "Please set your GOPATH."
         exit 2
     fi
-    docker run --name qmstr-demo-master --rm -d -p 50051:50051 -p 8000:8000 -p 8080:8080 -p 2345:2345 -v "${QMSTR_SRC}":/go/src/github.com/QMSTR/qmstr -v $(pwd):/buildroot qmstr/dev
+    echo "Running qmstr-master development container"
+    docker run --name qmstr-demo-master --rm -d -p 50051:50051 -p 8000:8000 -p 8080:8080 ${QMSTR_DEV:+"-p${QMSTR_DEV}:2345"} ${QMSTR_DEV:+"-eQMSTR_DEV=${QMSTR_DEV}"} ${QMSTR_DEV:+--security-opt seccomp=unconfined} -v "${GOPATH}"/src:/go/src -v $(pwd):/buildroot qmstr/dev
 
 }
 
@@ -21,10 +23,11 @@ function init() {
 }
 
 function run_qmstr_master() {
-    if [ -z "$QMSTR_DEBUG" ]; then
-        run_qmstr_prod
-    else
+    if [ -n ${QMSTR_DEV+x} ]; then
+        echo "qmstr-master development container selected"
         run_qmstr_dev
+    else
+        run_qmstr_prod
     fi
 }
 
