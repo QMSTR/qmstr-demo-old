@@ -23,7 +23,7 @@ function init() {
 }
 
 function run_qmstr_master() {
-    if [ -n ${QMSTR_DEV+x} ]; then
+    if [ -n "${QMSTR_DEV+x}" ]; then
         echo "qmstr-master development container selected"
         run_qmstr_dev
     else
