@@ -3,9 +3,10 @@ set -e
 
 source ../build.inc
 init
+sed "s#SOURCEDIR#$(pwd)#" qmstr.tmpl > qmstr.yaml
 run_qmstr_master
 
-setup_git_src https://git.fsfe.org/jonas/curl.git reuse-compliant curl 
+setup_git_src https://git.fsfe.org/jonas/curl.git reuse-compliant curl
 
 pushd curl
 git clean -fxd
@@ -26,6 +27,6 @@ make -j4
 echo "curl built"
 echo "starting analysis"
 
-popd
-sed "s#SOURCEDIR#$(pwd)#" ana.yaml > ana_curl.yaml
-qmstr-cli analyze ana_curl.yaml
+qmstr-cli analyze
+qmstr-cli report
+

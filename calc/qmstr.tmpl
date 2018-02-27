@@ -1,0 +1,15 @@
+server:
+  rpcaddress: ":50051"
+  dbaddress: "localhost:9080"
+analysis:
+  - analyzer: scancode
+    selector: sourcecode
+    pathsub:
+      - old: "SOURCEDIR"
+        new: "/buildroot"
+    config:
+      workdir: "/buildroot"
+reporting:
+  - reporttype: "license"
+    selector: "linkedtarget"
+    name: "calc"

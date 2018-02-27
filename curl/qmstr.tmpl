@@ -1,0 +1,15 @@
+server:
+  rpcaddress: ":50051"
+  dbaddress: "localhost:9080"
+analysis:
+  - analyzer: spdx
+    selector: sourcecode
+    pathsub:
+      - old: "SOURCEDIR"
+        new: "/buildroot"
+    config:
+      foo: bar
+reporting:
+  - reporttype: "license"
+    selector: "linkedtarget"
+    name: "curl"
