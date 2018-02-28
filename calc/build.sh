@@ -30,7 +30,9 @@ make clean
 export LIBRARY_PATH
 make -j4
 
+echo "Build finished. Triggering analysis."
 qmstr-cli analyze
+echo "Analysis finished. Triggering reporting."
 qmstr-cli report
 
 echo "Build finished. Don't forget to quit the qmstr-master server."
