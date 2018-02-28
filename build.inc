@@ -10,6 +10,9 @@ function run_qmstr_dev() {
     fi
     echo "Running qmstr-master development container"
     docker run --name qmstr-demo-master --rm -d -p 50051:50051 -p 8000:8000 -p 8080:8080 ${QMSTR_DEV:+"-p${QMSTR_DEV}:2345"} ${QMSTR_DEV:+"-eQMSTR_DEV=${QMSTR_DEV}"} ${QMSTR_DEV:+--security-opt seccomp=unconfined} -v "${GOPATH}"/src:/go/src -v $(pwd):/buildroot qmstr/dev
+    if [ -n "${QMSTR_DEV}" ]; then
+        echo "DEBUGGING: Connect your debugger to port ${QMSTR_DEV}."
+    fi
 
 }
 
