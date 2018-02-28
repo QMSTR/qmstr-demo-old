@@ -20,6 +20,8 @@ function init() {
     fi
 
     export PATH=$QMSTR_HOME/bin:$PATH
+    GCC_BINARY=`which gcc`
+    echo "Note: GCC is $GCC_BINARY (path adjusted to enable Quartermaster instrumentation)."
 }
 
 function run_qmstr_master() {
