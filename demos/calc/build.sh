@@ -13,8 +13,8 @@ setup_git_src https://github.com/json-c/json-c.git master json-c
 pushd json-c
 git clean -fxd
 
-echo "Waiting for qmstr-master server"
-qmstr-cli wait
+echo "Waiting for qmstr-master server to connect in qmstr-demo-master:50051"
+qmstr-cli --cserv qmstr-demo-master:50051 wait
 
 sh autogen.sh
 ./configure
