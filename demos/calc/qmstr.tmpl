@@ -1,8 +1,13 @@
 package:
-  name: "calc"
+  name: "The Calculator"
+  metadata:
+    Vendor: "Endocode"
+    OcFossLiaison: "Mirko Boehm"
+    OcComplianceContact: "foss@endocode.com"
   server:
     rpcaddress: ":50051"
     dbaddress: "localhost:9080"
+    dbworkers: 4
   analysis:
     - analyzer: spdx-analyzer
       selector: sourcecode
@@ -22,4 +27,5 @@ package:
       #  cached: "true"
   reporting:
     - reporter: qmstr-reporter-html
-      selector: "linkedtarget"
+      config:
+        siteprovider: "Endocode"

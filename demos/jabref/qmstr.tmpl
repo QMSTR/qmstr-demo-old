@@ -1,5 +1,9 @@
 package:
-  name: "jabref"
+  name: JabRef
+  metadata:
+    Vendor: "Endocode"
+    OcFossLiaison: "Mirko Boehm"
+    OcComplianceContact: "foss@endocode.com"
   server:
     rpcaddress: ":50051"
     dbaddress: "localhost:9080"
@@ -20,7 +24,7 @@ package:
       config:
         workdir: "/buildroot"
         resultfile: "/buildroot/scancode.json"
-      #  cached: "true"
   reporting:
     - reporter: qmstr-reporter-html
-      selector: "linkedtarget"
+      config:
+        siteprovider: "Endocode"
