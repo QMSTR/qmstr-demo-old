@@ -4,3 +4,5 @@ calc/Calculator
 calc/json-c
 **/ana.yaml
 curl/curl
+**/qmstr.yaml
+jabref/jabref

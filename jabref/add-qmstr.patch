@@ -1,0 +1,33 @@
+From 8f0bee54b94c2ca72b8a992db25b091295c78503 Mon Sep 17 00:00:00 2001
+From: Markus Herpich <markus@endocode.com>
+Date: Tue, 3 Apr 2018 14:52:13 +0200
+Subject: [PATCH] Add qmstr plugin
+
+---
+ build.gradle | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/build.gradle b/build.gradle
+index ad8e5b70a..26e1501b8 100644
+--- a/build.gradle
++++ b/build.gradle
+@@ -14,6 +14,7 @@ buildscript {
+     }
+     dependencies {
+         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0'
++        classpath "org.qmstr.gradle:qmstr-plugin:0.1"
+     }
+ }
+ 
+@@ -43,6 +44,8 @@ apply plugin: 'me.champeau.gradle.jmh'
+ apply plugin: 'checkstyle'
+ apply plugin: 'org.junit.platform.gradle.plugin'
+ 
++apply plugin: 'qmstr'
++
+ apply from: 'eclipse.gradle'
+ apply from: 'localization.gradle'
+ apply from: 'xjc.gradle'
+-- 
+2.14.1
+
