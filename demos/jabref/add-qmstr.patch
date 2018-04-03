@@ -1,12 +1,3 @@
-From 01fbc4262df9cc0569fe6c144bae059bda194d9a Mon Sep 17 00:00:00 2001
-From: Giasemi Seisa <giasemi.seisa@endocode.com>
-Date: Mon, 16 Apr 2018 14:27:56 +0200
-Subject: [PATCH] [PATCH] Add qmstr plugin
-
----
- build.gradle | 3 +++
- 1 file changed, 3 insertions(+)
-
 diff --git a/build.gradle b/build.gradle
 index 28061e1b2..a93dcdb9c 100644
 --- a/build.gradle
@@ -28,6 +19,3 @@ index 28061e1b2..a93dcdb9c 100644
  apply from: 'eclipse.gradle'
  apply from: 'localization.gradle'
  apply from: 'xjc.gradle'
--- 
-2.16.3
-
