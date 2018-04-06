@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-source ../build.inc
+source ../../build.inc
 init
 sed "s#SOURCEDIR#$(pwd)#" qmstr.tmpl > qmstr.yaml
 run_qmstr_master
