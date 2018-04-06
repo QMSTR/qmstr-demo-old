@@ -47,4 +47,7 @@ make -j4
 echo "[INFO]Build finished. Triggering analysis."
 qmstr-cli --cserv qmstr-demo-master:50051 analyze
 
+echo "[INFO] start reporting process"
+sh ../../setup.sh /usr/local/share/qmstr /qmstr-master
+
 echo "[INFO]Build finished. Don't forget to quit the qmstr-master server."
