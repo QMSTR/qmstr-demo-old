@@ -25,5 +25,5 @@ VOLUME /go/src
 ENV QMSTR_ADDRESS "qmstr-demo-master:50051"
 
 ADD build.inc ./build.inc
-#RUN chmod +x /demos/calc/calc_entrypoint.sh
-ENTRYPOINT [ "/demos/calc/calc_entrypoint.sh" ]
+#RUN chmod +x /demos/calc/entrypoint.sh
+ENTRYPOINT [ "/demos/calc/entrypoint.sh" ]
