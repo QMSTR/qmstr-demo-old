@@ -5,8 +5,6 @@ RUN apt-get update && \
     apt-get install -y docker.io wget cmake libtool && \
     rm -rf /var/lib/apt/lists/*
 
-ADD demos ./demos
-
 RUN mkdir -p /go/bin
 COPY --from=qmstr/master_build /go/bin/qmstr /go/bin/qmstr
 COPY --from=qmstr/master_build /go/bin/qmstr-wrapper /go/bin/qmstr-wrapper
