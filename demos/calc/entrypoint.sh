@@ -45,13 +45,13 @@ export LIBRARY_PATH
 make -j4
 
 echo "[INFO]Build finished. Triggering analysis."
-qmstr-cli --cserv qmstr-demo-master:50051 analyze
+qmstr-cli --cserv ${QMSTR_ADDRESS} analyze
 
 echo "[INFO] start reporting process"
 echo "[INFO] create report skeleton"
-sh ../../qmstr-master/cmd/qmstr-reporter-html/setup.sh /usr/local/share/qmstr /qmstr-master
+sh /qmstr-master/cmd/qmstr-reporter-html/setup.sh /usr/local/share/qmstr /qmstr-master
 
 echo "[INFO] call cli report"
-qmstr-cli report
+qmstr-cli --cserv ${QMSTR_ADDRESS} report
 
 echo "[INFO]Build finished. Don't forget to quit the qmstr-master server."
