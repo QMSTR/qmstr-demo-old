@@ -1,22 +1,17 @@
 #!/bin/bash
 set -e
 
-function cleanup {
-    docker rm -f qmstr-demo-master
-}
-trap cleanup EXIT
-
 BASEDIR="$(dirname "$(readlink -f "$0")")"
-echo "BASEDIR:"
-echo $BASEDIR
+echo "BASEDIR: $BASEDIR"
 
 # Use easy mode to create sym link to qmstr-wrapper
 newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)
 export PATH=$newPath
-echo $PATH
+echo "Path adjusted to enable Quartermaster instrumentation: $PATH"
+
 source ${BASEDIR}/../../build.inc
-echo "PWD_DEMOS:"
-echo $PWD_DEMOS
+
+echo "PWD_DEMOS: $PWD_DEMOS"
 sed "s#SOURCEDIR#${PWD_DEMOS:-$(pwd)}#" ${BASEDIR}/qmstr.tmpl >  ${BASEDIR}/qmstr.yaml
 run_qmstr_prod
 
@@ -27,8 +22,8 @@ setup_git_src https://github.com/json-c/json-c.git master json-c
 pushd json-c
 git clean -fxd
 
-echo "[INFO]Waiting for qmstr-master server to connect in qmstr-demo-master:50051"
-qmstr-cli --cserv qmstr-demo-master:50051 wait
+echo "[INFO]Waiting for qmstr-master server to connect in ${QMSTR_ADDRESS}"
+qmstr-cli --cserv ${QMSTR_ADDRESS} wait
 
 sh autogen.sh
 ./configure
