@@ -14,9 +14,6 @@ COPY --from=qmstr/master_build /go/bin/spdx-analyzer /go/bin/spdx-analyzer
 COPY --from=qmstr/master_build /go/bin/scancode-analyzer /go/bin/scancode-analyzer
 COPY --from=qmstr/master_build /go/bin/qmstr-reporter-html /go/bin/qmstr-reporter-html
 
-#RUN CALC DEMO
-FROM demobase as democalc
-
 ENV GOPATH /go
 ENV PATH ${GOPATH}/bin:/usr/lib/go-1.9/bin:$PATH
 
@@ -25,5 +22,14 @@ VOLUME /go/src
 ENV QMSTR_ADDRESS "qmstr-demo-master:50051"
 
 ADD build.inc ./build.inc
+
 ADD ./qmstr-master /qmstr-master
+
+#RUN CALC DEMO
+FROM demobase as democalc
+
 ENTRYPOINT [ "/demos/calc/entrypoint.sh" ]
+
+FROM demobase as democurl
+
+ENTRYPOINT [ "/demos/curl/entrypoint.sh" ]
