@@ -15,6 +15,7 @@ run_qmstr_master
 
 setup_git_src https://git.fsfe.org/jonas/curl.git reuse-compliant curl
 
+mv ../../curl ${BASEDIR}
 pushd ${BASEDIR}/curl
 git clean -fxd
 mkdir build
