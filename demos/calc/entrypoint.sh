@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+trap cleanup_master EXIT
+
 BASEDIR="$(dirname "$(readlink -f "$0")")"
 echo "BASEDIR: $BASEDIR"
 

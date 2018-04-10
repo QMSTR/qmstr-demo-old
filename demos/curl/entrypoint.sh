@@ -1,6 +1,8 @@
 #!/bin/bash
 set -e
 
+trap cleanup_master EXIT
+
 source ../../build.inc
 BASEDIR="$(dirname "$(readlink -f "$0")")"
 echo "BASEDIR: $BASEDIR"
@@ -40,4 +42,10 @@ echo "starting analysis"
 qmstr-cli --cserv ${QMSTR_ADDRESS} analyze
 
 echo "[INFO] start reporting process"
-sh /setup.sh /usr/local/share/qmstr /qmstr-master
+echo "[INFO] create report skeleton"
+sh /qmstr-master/cmd/qmstr-reporter-html/setup.sh /usr/local/share/qmstr /qmstr-master
+
+echo "[INFO] call cli report"
+qmstr-cli --cserv ${QMSTR_ADDRESS} report
+
+echo "[INFO]Build finished. Don't forget to quit the qmstr-master server."
