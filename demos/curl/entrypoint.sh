@@ -1,4 +1,4 @@
-#!/bin/bash
+!/bin/bash
 set -e
 
 source ../../build.inc
@@ -6,6 +6,7 @@ BASEDIR="$(dirname "$(readlink -f "$0")")"
 echo "BASEDIR: $BASEDIR"
 
 # Use easy mode to create sym link to qmstr-wrapper
+# TODO CALL ONLY ONCE TO QMSTR -KEEP AND SAVE FOLDER
 newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)
 export PATH=$newPath
 echo "Path adjusted to enable Quartermaster instrumentation: $PATH"
@@ -32,7 +33,7 @@ echo "Waiting for qmstr-master server to connect in ${QMSTR_ADDRESS}"
 qmstr-cli --cserv ${QMSTR_ADDRESS} wait
 echo "master server up and running"
 
-cmake -DOPENSSL_ROOT_DIR=/usr/local/Cellar/openssl/1.0.2l -DOPENSSL_LIBRARIES=/usr/local/Cellar/openssl/1.0.2l/lib ..
+cmake ..
 make 
 
 echo "curl built"
@@ -40,4 +41,4 @@ echo "starting analysis"
 qmstr-cli --cserv ${QMSTR_ADDRESS} analyze
 
 echo "[INFO] start reporting process"
-sh ../../setup.sh /usr/local/share/qmstr /qmstr-master
+sh /setup.sh /usr/local/share/qmstr /qmstr-master

@@ -8,7 +8,7 @@ function cleanup_master() {
 function run_qmstr_prod() {
     cleanup_master
     echo "Running qmstr-master container"
-    docker run --name ${MASTER_CONTAINER_NAME} --rm -d -p 50051:50051 -p 8000:8000 -p 8080:8080 -v "${PWD_DEMOS:-$(pwd)}":/buildroot --net qmstrnet qmstr/master
+    docker run --name ${MASTER_CONTAINER_NAME} --rm -d -p 50051:50051 -v "${PWD_DEMOS:-$(pwd)}":/buildroot --net qmstrnet qmstr/master
 }
 
 function run_qmstr_dev() {

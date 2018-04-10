@@ -1,9 +1,8 @@
 FROM runtime as demobase
 
 # install runtime deps 
-RUN apt-get update && \
-    apt-get install -y docker.io wget cmake libtool && \
-    rm -rf /var/lib/apt/lists/*
+RUN apt-get update
+RUN apt-get install -y docker.io wget cmake libtool pkgconf libssl-dev
 
 RUN mkdir -p /go/bin
 COPY --from=qmstr/master_build /go/bin/qmstr /go/bin/qmstr
