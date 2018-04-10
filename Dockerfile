@@ -13,6 +13,8 @@ COPY --from=qmstr/master_build /go/bin/spdx-analyzer /go/bin/spdx-analyzer
 COPY --from=qmstr/master_build /go/bin/scancode-analyzer /go/bin/scancode-analyzer
 COPY --from=qmstr/master_build /go/bin/qmstr-reporter-html /go/bin/qmstr-reporter-html
 
+COPY --from=qmstr/master_build  $GOPATH/src/github.com/QMSTR/qmstr /qmstr
+
 ENV GOPATH /go
 ENV PATH ${GOPATH}/bin:/usr/lib/go-1.9/bin:$PATH
 
@@ -22,7 +24,7 @@ ENV QMSTR_ADDRESS "qmstr-demo-master:50051"
 
 ADD build.inc ./build.inc
 
-ADD ./qmstr-master /qmstr-master
+#ADD ./qmstr-master /qmstr-master
 
 #RUN CALC DEMO
 FROM demobase as democalc
