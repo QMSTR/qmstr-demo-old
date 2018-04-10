@@ -1,4 +1,4 @@
-!/bin/bash
+#!/bin/bash
 set -e
 
 source ../../build.inc
@@ -6,7 +6,6 @@ BASEDIR="$(dirname "$(readlink -f "$0")")"
 echo "BASEDIR: $BASEDIR"
 
 # Use easy mode to create sym link to qmstr-wrapper
-# TODO CALL ONLY ONCE TO QMSTR -KEEP AND SAVE FOLDER
 newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)
 export PATH=$newPath
 echo "Path adjusted to enable Quartermaster instrumentation: $PATH"
