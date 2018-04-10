@@ -9,10 +9,6 @@ COPY --from=qmstr/master_build /go/bin/qmstr /go/bin/qmstr
 COPY --from=qmstr/master_build /go/bin/qmstr-wrapper /go/bin/qmstr-wrapper
 COPY --from=qmstr/master_build /go/bin/qmstr-cli /go/bin/qmstr-cli
 
-COPY --from=qmstr/master_build /go/bin/spdx-analyzer /go/bin/spdx-analyzer
-COPY --from=qmstr/master_build /go/bin/scancode-analyzer /go/bin/scancode-analyzer
-COPY --from=qmstr/master_build /go/bin/qmstr-reporter-html /go/bin/qmstr-reporter-html
-
 COPY --from=qmstr/master_build  $GOPATH/src/github.com/QMSTR/qmstr /qmstr
 
 ENV GOPATH /go
