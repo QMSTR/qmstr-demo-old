@@ -15,7 +15,7 @@ source ${BASEDIR}/../../build.inc
 
 echo "PWD_DEMOS: $PWD_DEMOS"
 sed "s#SOURCEDIR#${PWD_DEMOS:-$(pwd)}#" ${BASEDIR}/qmstr.tmpl >  ${BASEDIR}/qmstr.yaml
-run_qmstr_prod
+run_qmstr_master
 
 JSONC_BRANCH="master"
 
@@ -24,8 +24,9 @@ setup_git_src https://github.com/json-c/json-c.git master json-c
 pushd json-c
 git clean -fxd
 
-echo "[INFO]Waiting for qmstr-master server to connect in ${QMSTR_ADDRESS}"
+echo "Waiting for qmstr-master server"
 qmstr-cli --cserv ${QMSTR_ADDRESS} wait
+echo "master server up and running"
 
 sh autogen.sh
 ./configure

@@ -23,7 +23,7 @@ function run_qmstr_dev() {
     echo ######### echo #########
     echo ${E_DEMO:-$(pwd)}
     echo #########
-    docker run --name ${MASTER_CONTAINER_NAME} --rm -d -p 50051:50051 -p 8000:8000 -p 8080:8080 ${QMSTR_DEV:+"-p${QMSTR_DEV}:2345"} ${QMSTR_DEV:+"-eQMSTR_DEV=${QMSTR_DEV}"} ${QMSTR_DEV:+--security-opt seccomp=unconfined} -v "${GOPATH}"/src:/go/src -v $(pwd):/buildroot qmstr/dev          
+    docker run --name ${MASTER_CONTAINER_NAME} --rm -d -p 50051:50051 -p 8000:8000 -p 8080:8080 ${QMSTR_DEV:+"-p${QMSTR_DEV}:2345"} ${QMSTR_DEV:+"-eQMSTR_DEV=${QMSTR_DEV}"} ${QMSTR_DEV:+--security-opt seccomp=unconfined} -v "${GOPATH}"/src:/go/src -v "${PWD_DEMOS:-$(pwd)}":/buildroot qmstr/dev          
     if [ -n "${QMSTR_DEV}" ]; then
         echo "DEBUGGING: Connect your debugger to port ${QMSTR_DEV}."
     fi
@@ -55,4 +55,12 @@ function setup_git_src() {
     dir=$3
 
     git clone -b "${branch}" --single-branch "${repo_url}" "${dir}" || (cd "${dir}"; git fetch; git reset --hard origin/"${branch}")
+}
+
+function check_qmstr_address() {
+    if [ -z "$QMSTR_ADDRESS" ]; then
+        return 
+    else 
+        return --cserv ${QMSTR_ADDRESS}
+    fi
 }
