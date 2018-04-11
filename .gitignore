@@ -1,8 +1,9 @@
 **/*.o
 **/*.so
-calc/Calculator
-calc/json-c
+demos/calc/Calculator
+demos/calc/json-c
 **/ana.yaml
-curl/curl
+demos/curl/curl
 **/qmstr.yaml
-jabref/jabref
+*.DS_Store
+demos/jabref/jabref
