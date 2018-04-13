@@ -58,9 +58,9 @@ function setup_git_src() {
 }
 
 function check_qmstr_address() {
-    if [ -z "$QMSTR_ADDRESS" ]; then
-        return 
-    else 
-        return --cserv ${QMSTR_ADDRESS}
+    val=""
+    if [ -n "$QMSTR_ADDRESS" ]; then
+        val="--cserv ${QMSTR_ADDRESS}"
     fi
+    echo "$val"
 }

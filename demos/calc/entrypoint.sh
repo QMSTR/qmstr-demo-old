@@ -24,8 +24,10 @@ setup_git_src https://github.com/json-c/json-c.git master json-c
 pushd json-c
 git clean -fxd
 
+ADDRESS=$(check_qmstr_address)
+
 echo "Waiting for qmstr-master server"
-qmstr-cli --cserv ${QMSTR_ADDRESS} wait
+qmstr-cli $ADDRESS wait
 echo "master server up and running"
 
 sh autogen.sh
@@ -43,15 +45,15 @@ export LIBRARY_PATH
 make -j4
 
 echo "[INFO]Build finished. Triggering analysis."
-qmstr-cli --cserv ${QMSTR_ADDRESS} analyze
+qmstr-cli $ADDRESS analyze
 
 
 echo "Analysis finished."
-#echo "[INFO] start reporting process"
-#echo "[INFO] create report skeleton"
-#sh /qmstr/cmd/qmstr-reporter-html/setup.sh /usr/local/share/qmstr /qmstr
+echo "[INFO] start reporting process"
+echo "[INFO] create report skeleton"
+sh /qmstr/cmd/qmstr-reporter-html/setup.sh /usr/local/share/qmstr /qmstr
 
-#echo "[INFO] call cli report"
-#qmstr-cli --cserv ${QMSTR_ADDRESS} report
+echo "[INFO] call cli report"
+qmstr-cli $ADDRESS report
 
 echo "Build finished. Don't forget to quit the qmstr-master server."
