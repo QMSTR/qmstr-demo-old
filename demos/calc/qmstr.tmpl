@@ -1,23 +1,25 @@
-server:
-  rpcaddress: ":50051"
-  dbaddress: "localhost:9080"
-analysis:
-  - analyzer: spdx-analyzer
-    selector: sourcecode
-    pathsub:
-      - old: "SOURCEDIR"
-        new: "/buildroot"
-    config:
-      workdir: "/buildroot"
-  - analyzer: scancode-analyzer
-    selector: sourcecode
-    pathsub:
-      - old: "SOURCEDIR"
-        new: "/buildroot"
-    config:
-      workdir: "/buildroot"
-      resultfile: "/buildroot/scancode.json"
-#      cached: "true"
-reporting:
-  - reporter: qmstr-reporter-html
-    selector: "linkedtarget"
+package:
+  name: "calc"
+  server:
+    rpcaddress: ":50051"
+    dbaddress: "localhost:9080"
+  analysis:
+    - analyzer: spdx-analyzer
+      selector: sourcecode
+      pathsub:
+        - old: "SOURCEDIR"
+          new: "/buildroot"
+      config:
+        workdir: "/buildroot"
+    - analyzer: scancode-analyzer
+      selector: sourcecode
+      pathsub:
+        - old: "SOURCEDIR"
+          new: "/buildroot"
+      config:
+        workdir: "/buildroot"
+        resultfile: "/buildroot/scancode.json"
+      #  cached: "true"
+  reporting:
+    - reporter: qmstr-reporter-html
+      selector: "linkedtarget"
