@@ -23,15 +23,16 @@ git config --global user.email "you@example.com"
 git config --global user.name "Your Name"
 git am --signoff < ${BASEDIR}/add-qmstr.patch
 
+ADDRESS=$(check_qmstr_address)
 echo "Waiting for qmstr-master server"
-qmstr-cli --cserv ${QMSTR_ADDRESS} wait
+qmstr-cli $ADDRESS wait
 
 echo "Start gradle build"
-./gradlew qmstr  --stacktrace
+./gradlew qmstr --stacktrace
 
 echo "Build finished. Triggering analysis."
-qmstr-cli --cserv ${QMSTR_ADDRESS} analyze
+qmstr-cli $ADDRESS analyze
 echo "Analysis finished. Triggering reporting."
-qmstr-cli --cserv ${QMSTR_ADDRESS} report
+qmstr-cli $ADDRESS report
 
 echo "Build finished. Don't forget to quit the qmstr-master server."
