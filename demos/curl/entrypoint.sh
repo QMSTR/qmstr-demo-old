@@ -29,26 +29,20 @@ export CC=$GCCPATH
 export CXX=$GCCBINPATH/g++
 export CMAKE_LINKER=gcc
 
-
 ADDRESS=$(check_qmstr_address)
 
 echo "Waiting for qmstr-master server"
 qmstr-cli $ADDRESS wait
 echo "master server up and running"
 
+echo "[INFO] Start curl build"
 cmake ..
 make 
 
-echo "curl built"
-echo "starting analysis"
+echo "[INFO] Build finished. Triggering analysis."
 qmstr-cli $ADDRESS analyze
 
-echo "Analysis finished."
-echo "[INFO] start reporting process"
-echo "[INFO] create report skeleton"
-sh /qmstr/cmd/qmstr-reporter-html/setup.sh /usr/local/share/qmstr /qmstr
-
-echo "[INFO] call cli report"
+echo "[INFO] Analysis finished. Triggering reporting."
 qmstr-cli $ADDRESS report
 
 echo "Build finished. Don't forget to quit the qmstr-master server."

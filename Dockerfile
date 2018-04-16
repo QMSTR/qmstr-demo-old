@@ -11,14 +11,11 @@ COPY --from=qmstr/master_build /go/bin/qmstr-cli /go/bin/qmstr-cli
 ENV GOPATH /go
 ENV PATH ${GOPATH}/bin:/usr/lib/go-1.9/bin:$PATH
 
-COPY --from=qmstr/master_build  $GOPATH/src/github.com/QMSTR/qmstr /qmstr
 VOLUME /go/src
 
 ENV QMSTR_ADDRESS "qmstr-demo-master:50051"
 
 ADD build.inc ./build.inc
-
-#ADD ./qmstr-master /qmstr-master
 
 # calc demo case
 FROM demobase as democalc
