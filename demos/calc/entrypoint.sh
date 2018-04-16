@@ -44,16 +44,10 @@ make clean
 export LIBRARY_PATH
 make -j4
 
-echo "[INFO]Build finished. Triggering analysis."
+echo "[INFO] Build finished. Triggering analysis."
 qmstr-cli $ADDRESS analyze
 
-
-echo "Analysis finished."
-echo "[INFO] start reporting process"
-echo "[INFO] create report skeleton"
-sh /qmstr/cmd/qmstr-reporter-html/setup.sh /usr/local/share/qmstr /qmstr
-
-echo "[INFO] call cli report"
+echo "[INFO] Analysis finished. Triggering reporting."
 qmstr-cli $ADDRESS report
 
 echo "Build finished. Don't forget to quit the qmstr-master server."

@@ -27,12 +27,13 @@ ADDRESS=$(check_qmstr_address)
 echo "Waiting for qmstr-master server"
 qmstr-cli $ADDRESS wait
 
-echo "Start gradle build"
+echo "[INFO] Start gradle build"
 ./gradlew qmstr --stacktrace
 
-echo "Build finished. Triggering analysis."
+echo "[INFO] Build finished. Triggering analysis."
 qmstr-cli $ADDRESS analyze
-echo "Analysis finished. Triggering reporting."
+
+echo "[INFO] Analysis finished. Triggering reporting."
 qmstr-cli $ADDRESS report
 
-echo "Build finished. Don't forget to quit the qmstr-master server."
+echo "[INFO] Build finished. Don't forget to quit the qmstr-master server."
