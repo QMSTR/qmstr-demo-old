@@ -18,9 +18,7 @@ setup_git_src https://github.com/JabRef/jabref.git master jabref
 pushd jabref
 git clean -fxd
 echo "Applying qmstr plugin to gradle build configuration"
-git config --global user.email "you@example.com"
-git config --global user.name "Your Name"
-git am --signoff < ${BASEDIR}/add-qmstr.patch
+patch -p1  < ${BASEDIR}/add-qmstr.patch
 
 ADDRESS=$(check_qmstr_address)
 echo "Waiting for qmstr-master server"
