@@ -1,12 +1,52 @@
-# qmstr-demo
-Demos testing qmstr
+# QMSTR DEMO
 
-# Running the demos
-In order to run the demos you must have at least one of the master container images built and ready.
+In the following demo, you will run [Quartermaster](http://qmstr.org) and use it to compile cURL, in the end you will have the console log of master and client to inspect
 
-Each directory contains a demo case that is started via the build.sh script from within the very directory.
+You can also inspect our [CI pipeline](https://ci.endocode.com/blue/organizations/jenkins/QMSTR%2Fqmstr-cURL-demo/activity) being initilized by cURL repo on github. 
 
-## How to run the demo
-- Export QMSTR_HOME to a directory that contains a bin directory containing symlinks to qmstr-wrapper.
-- Also the qmstr-cli must be available on your PATH
-- run build.sh from within the demo's directory
+## Requierments
+
+Docker
+
+## Running the demo
+
+In order to run QMSTR cURL demo follow the steps:
+
+	git clone git@github.com:qmstr/qmstr.git
+
+	git clone git@github.com:qmstr/qmstr-demo.git
+
+Create network for docker container to communicate with each other
+
+	docker network create qmstrnet
+
+### Build Docker images for Master 
+
+	cd ./qmstr
+
+	docker build -f ci/Dockerfile -t qmstr/master_build --target builder .
+	docker build -f ci/Dockerfile -t qmstr/master --target master .
+	docker build -f ci/Dockerfile -t runtime --target runtime . 
+
+### Build Docker images for Demo
+
+	> cd ./qmstr-demo
+
+	> docker build -t qmstr/democurl --target democurl .
+
+From the demo's repository folder run the following command
+
+	> docker run --name curldemo --privileged -v $(pwd)/qmstr-demo/demos:/demos -v /var/run/docker.sock:/var/run/docker.sock -e PWD_DEMOS=$(pwd)/qmstr-demo/demos/curl --net qmstrnet --rm qmstr/democurl
+	
+You will now see the client side running, in order to see the qmstr master log open a new terminal and run the following command:
+    docker logs qmstr\master -f
+
+### Cleanup
+	> docker rmi qmstr/master_build
+	> docker rmi qmstr/master
+	> docker rmi runtime
+	> docker rmi qmstr/democurl
+	> docker network rm qmstrnet
+
+For more information you can see the [README](https://github.com/QMSTR/qmstr/blob/master/README.md) of the main repository
+  
