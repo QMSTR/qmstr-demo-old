@@ -4,7 +4,6 @@ set -e
 trap cleanup_master EXIT
 
 BASEDIR="$(dirname "$(readlink -f "$0")")"
-echo "BASEDIR: $BASEDIR"
 
 # Use easy mode to create sym link to qmstr-wrapper
 newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)

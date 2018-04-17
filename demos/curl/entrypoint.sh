@@ -5,7 +5,6 @@ trap cleanup_master EXIT
 
 source ../../build.inc
 BASEDIR="$(dirname "$(readlink -f "$0")")"
-echo "BASEDIR: $BASEDIR"
 
 # Use easy mode to create sym link to qmstr-wrapper
 newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)
@@ -21,12 +20,10 @@ pushd ${BASEDIR}/curl
 git clean -fxd
 mkdir build
 cd build
-GCCPATH=$(qmstr -keep which gcc | tail -n 1)
+GCCPATH=$(echo $PATH | cut -d ':' -f1)
 echo "GCCPATH: $GCCPATH"
-GCCBINPATH=${GCCPATH%/*}
-echo "GCCBINPATH: $GCCBINPATH"
-export CC=$GCCPATH
-export CXX=$GCCBINPATH/g++
+export CC=$GCCPATH/gcc
+export CXX=$GCCPATH/g++
 export CMAKE_LINKER=gcc
 
 ADDRESS=$(check_qmstr_address)
