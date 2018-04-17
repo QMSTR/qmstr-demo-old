@@ -1,20 +1,20 @@
-From 8f0bee54b94c2ca72b8a992db25b091295c78503 Mon Sep 17 00:00:00 2001
-From: Markus Herpich <markus@endocode.com>
-Date: Tue, 3 Apr 2018 14:52:13 +0200
-Subject: [PATCH] Add qmstr plugin
+From 01fbc4262df9cc0569fe6c144bae059bda194d9a Mon Sep 17 00:00:00 2001
+From: Giasemi Seisa <giasemi.seisa@endocode.com>
+Date: Mon, 16 Apr 2018 14:27:56 +0200
+Subject: [PATCH] [PATCH] Add qmstr plugin
 
 ---
  build.gradle | 3 +++
  1 file changed, 3 insertions(+)
 
 diff --git a/build.gradle b/build.gradle
-index ad8e5b70a..26e1501b8 100644
+index 28061e1b2..a93dcdb9c 100644
 --- a/build.gradle
 +++ b/build.gradle
 @@ -14,6 +14,7 @@ buildscript {
      }
      dependencies {
-         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.1.0'
+         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.2.0-M1'
 +        classpath "org.qmstr.gradle:qmstr-plugin:0.1"
      }
  }
@@ -29,4 +29,5 @@ index ad8e5b70a..26e1501b8 100644
  apply from: 'localization.gradle'
  apply from: 'xjc.gradle'
 -- 
-2.14.1
+2.16.3
+
