@@ -57,3 +57,11 @@ RUN apt-get install -y openjdk-8-jdk openjfx
 COPY --from=javabuilder /root/.m2 /root/.m2
 
 ENTRYPOINT [ "/demos/jabref/entrypoint.sh" ]
+
+#openssl demo case 
+FROM demobase as demoopenssl
+# install runtime deps 
+RUN apt-get update
+RUN apt-get install -y libtool pkgconf perl libssl-dev
+
+ENTRYPOINT [ "/demos/openssl/entrypoint.sh" ]
