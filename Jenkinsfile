@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        MASTER_CONTAINER_NAME="qmstr-demo-master_${BUILD_NUMBER}"
+    }
+
     stages {
         stage('Clean') {
             steps {
@@ -36,13 +40,13 @@ pipeline {
                 stage('client side'){
                     steps{
                         dir("qmstr-demo"){
-                            sh 'docker run --name demojabref --privileged -v $(pwd)/demos:/demos -v /var/run/docker.sock:/var/run/docker.sock -e PWD_DEMOS=$(pwd)/demos/jabref --net qmstrnet --rm qmstr/demojabref' 
+                            sh 'docker run --name demojabref --privileged -v $(pwd)/demos:/demos -v /var/run/docker.sock:/var/run/docker.sock -e PWD_DEMOS=$(pwd)/demos/jabref -e MASTER_CONTAINER_NAME=${MASTER_CONTAINER_NAME} --net qmstrnet --rm qmstr/demojabref' 
                         }
                     }
                 }
                 stage('server side'){
                     steps{
-                        sh 'docker ps && sleep 10 && docker logs qmstr-demo-master -f'
+                        sh 'docker ps && sleep 10 && docker logs ${MASTER_CONTAINER_NAME} -f'
                     }
                 }
             }
@@ -59,16 +63,10 @@ pipeline {
                         sh './scripts/generate-data-branch.sh ./tempfolder'
                         sh 'git config http.sslVersion tlsv1.2'
                         withCredentials([usernamePassword(credentialsId: '6374572f-c47a-4939-beda-2ee601d65ff7', passwordVariable: 'cipassword', usernameVariable: 'ciuser')]) {
-                            //sh 'git push --force https://${ciuser}:${cipassword}@github.com/qmstr/web gh-pages'  
+                            //sh 'git push --force https://${ciuser}:${cipassword}@github.com/qmstr/web gh-pages'
                         }
                     }
                 }
-            }
-        }
-        stage('Cleanup') {
-            steps {
-                sh 'echo something'
-                //sh 'docker network rm ${QMSTR_NETWORK}'
             }
         }
     }
