@@ -32,7 +32,7 @@ echo "Waiting for qmstr-master server"
 qmstr-cli $ADDRESS wait
 
 echo "[INFO] Start gradle build"
-./gradlew qmstr --stacktrace
+./gradlew qmstr
 
 echo "[INFO] Build finished. Triggering analysis."
 qmstr-cli $ADDRESS analyze
