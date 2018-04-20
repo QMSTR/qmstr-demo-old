@@ -3,14 +3,19 @@ set -e
 
 trap cleanup_master EXIT
 
-DEMOWD="$(dirname "$(readlink -f "$0")")"
-
 echo "####################"
 echo "Running JabRef demo"
 echo "####################"
-echo "DEMOWD: $DEMOWD"
 
+if [ "$(uname -s)" = 'Linux' ]; then
+DEMOWD="$(dirname "$(readlink -f "$0")")"
+else
+DEMOWD="$(dirname "$(greadlink -f "$0")")"
+fi
+
+echo "DEMOWD: $DEMOWD"
 source ${DEMOWD}/../../build.inc
+
 # Use easy mode to create sym link to qmstr-wrapper
 newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)
 export PATH=$newPath
@@ -39,5 +44,9 @@ qmstr-cli $ADDRESS analyze
 
 echo "[INFO] Analysis finished. Triggering reporting."
 qmstr-cli $ADDRESS report
+
+echo "thats my location"
+docker cp ${MASTER_CONTAINER_NAME}:/qmstr-reports.tar.bz2 /demos/jabref
+
 
 echo "[INFO] Build finished. Don't forget to quit the qmstr-master server."

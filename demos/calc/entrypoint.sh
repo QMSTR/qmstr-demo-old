@@ -7,7 +7,12 @@ echo "####################"
 echo "Running Calculator demo"
 echo "####################"
 
+if [ "$(uname -s)" = 'Linux' ]; then
 DEMOWD="$(dirname "$(readlink -f "$0")")"
+else
+DEMOWD="$(dirname "$(greadlink -f "$0")")"
+fi
+
 echo "DEMOWD: $DEMOWD"
 # Use easy mode to create sym link to qmstr-wrapper
 newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)

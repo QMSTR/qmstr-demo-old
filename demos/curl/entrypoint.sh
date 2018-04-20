@@ -3,15 +3,19 @@ set -e
 
 trap cleanup_master EXIT
 
-DEMOWD="$(dirname "$(readlink -f "$0")")"
-
 echo "####################"
 echo "Running cURL demo"
 echo "####################"
 
-source ${DEMOWD}/../../build.inc
+if [ "$(uname -s)" = 'Linux' ]; then
+DEMOWD="$(dirname "$(readlink -f "$0")")"
+else
+DEMOWD="$(dirname "$(greadlink -f "$0")")"
+fi
 
 echo "DEMOWD: $DEMOWD"
+source ${DEMOWD}/../../build.inc
+
 # Use easy mode to create sym link to qmstr-wrapper
 newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)
 export PATH=$newPath
