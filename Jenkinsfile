@@ -69,5 +69,10 @@ pipeline {
                 }
             }
         }
+        stage('Cleanup') {
+            steps {
+                sh 'docker network rm ${QMSTR_NETWORK}'
+            }
+        }
     }
 }
