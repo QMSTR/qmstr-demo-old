@@ -45,4 +45,8 @@ qmstr-cli $ADDRESS analyze
 echo "[INFO] Analysis finished. Triggering reporting."
 qmstr-cli $ADDRESS report
 
+# Remove openssl folder
+echo "deleting temporary directory openssl"
+rm -rf ${DEMOWD}/openssl
+
 echo "Build finished. Don't forget to quit the qmstr-master server."

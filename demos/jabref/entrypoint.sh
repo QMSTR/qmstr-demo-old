@@ -48,5 +48,8 @@ qmstr-cli $ADDRESS report
 echo "thats my location"
 docker cp ${MASTER_CONTAINER_NAME}:/qmstr-reports.tar.bz2 /demos/jabref
 
+# Remove jabref folder
+echo "deleting temporary directory jabref"
+rm -rf ${DEMOWD}/jabref
 
 echo "[INFO] Build finished. Don't forget to quit the qmstr-master server."
