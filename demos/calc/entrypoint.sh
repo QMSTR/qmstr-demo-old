@@ -58,4 +58,8 @@ qmstr-cli $ADDRESS analyze
 echo "[INFO] Analysis finished. Triggering reporting."
 qmstr-cli $ADDRESS report
 
+# Remove json-c folder
+echo "deleting temporary directory json-c"
+rm -rf ${DEMOWD}/json-c 
+
 echo "Build finished. Don't forget to quit the qmstr-master server."
