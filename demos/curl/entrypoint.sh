@@ -57,4 +57,4 @@ qmstr-cli $ADDRESS report
 echo "deleting temporary directory curl"
 rm -rf ${DEMOWD}/curl
 
-echo "Build finished. Don't forget to quit the qmstr-master server."
+echo "Build finished."
