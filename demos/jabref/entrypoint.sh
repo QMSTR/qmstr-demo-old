@@ -3,6 +3,8 @@ set -e
 
 source ../../build.inc
 
+trap cleanup_master EXIT
+
 BASEDIR="$(dirname "$(readlink -f "$0")")"
 
 # Use easy mode to create sym link to qmstr-wrapper
@@ -25,12 +27,16 @@ echo "Waiting for qmstr-master server"
 qmstr-cli $ADDRESS wait
 
 echo "[INFO] Start gradle build"
-./gradlew qmstr --stacktrace
+./gradlew qmstr
 
 echo "[INFO] Build finished. Triggering analysis."
 qmstr-cli $ADDRESS analyze
 
 echo "[INFO] Analysis finished. Triggering reporting."
 qmstr-cli $ADDRESS report
+
+echo "thats my location"
+docker cp ${MASTER_CONTAINER_NAME}:/qmstr-reports.tar.bz2 /demos/jabref
+
 
 echo "[INFO] Build finished. Don't forget to quit the qmstr-master server."
