@@ -37,11 +37,8 @@ Create network for docker container to communicate with each other
 
 	docker build -t qmstr/democurl --target democurl .
 
-From the demo's repository folder run the following command
+	./rundemo.sh
 
-	cd $HOME/demo/
-	docker run --name curldemo --privileged -v $(pwd)/qmstr-demo/demos:/demos -v /var/run/docker.sock:/var/run/docker.sock -e PWD_DEMOS=$(pwd)/qmstr-demo/demos/curl --net qmstrnet --rm qmstr/democurl
-	
 You will now see the client side running, in order to see the qmstr master log open a new terminal and run the following command:
     docker logs qmstr\master -f
 

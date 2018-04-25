@@ -15,6 +15,7 @@ VOLUME /go/src
 
 ENV QMSTR_ADDRESS "qmstr-demo-master:50051"
 
+
 ADD build.inc ./build.inc
 
 # calc demo case

@@ -3,20 +3,27 @@ set -e
 
 trap cleanup_master EXIT
 
-source ../../build.inc
-BASEDIR="$(dirname "$(readlink -f "$0")")"
+DEMOWD="$(dirname "$(readlink -f "$0")")"
 
+echo "####################"
+echo "Running cURL demo"
+echo "####################"
+
+source ${DEMOWD}/../../build.inc
+
+echo "DEMOWD: $DEMOWD"
 # Use easy mode to create sym link to qmstr-wrapper
 newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)
 export PATH=$newPath
 echo "Path adjusted to enable Quartermaster instrumentation: $PATH"
 
-sed "s#SOURCEDIR#$(pwd)#" ${BASEDIR}/qmstr.tmpl > ${BASEDIR}/qmstr.yaml
+sed "s#SOURCEDIR#${DEMOWD}#" ${DEMOWD}/qmstr.tmpl > ${DEMOWD}/qmstr.yaml
 run_qmstr_master
 
-setup_git_src https://git.fsfe.org/jonas/curl.git reuse-compliant ${BASEDIR}/curl
+pushd ${DEMOWD}
+setup_git_src https://git.fsfe.org/jonas/curl.git reuse-compliant curl
 
-pushd ${BASEDIR}/curl
+pushd curl
 git clean -fxd
 mkdir build
 cd build
