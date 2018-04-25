@@ -3,21 +3,25 @@ set -e
 
 trap cleanup_master EXIT
 
-BASEDIR="$(dirname "$(readlink -f "$0")")"
+echo "####################"
+echo "Running Calculator demo"
+echo "####################"
 
+DEMOWD="$(dirname "$(readlink -f "$0")")"
+echo "DEMOWD: $DEMOWD"
 # Use easy mode to create sym link to qmstr-wrapper
 newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)
 export PATH=$newPath
 echo "Path adjusted to enable Quartermaster instrumentation: $PATH"
 
-source ${BASEDIR}/../../build.inc
+source ${DEMOWD}/../../build.inc
 
-echo "PWD_DEMOS: $PWD_DEMOS"
-sed "s#SOURCEDIR#${PWD_DEMOS:-$(pwd)}#" ${BASEDIR}/qmstr.tmpl >  ${BASEDIR}/qmstr.yaml
+sed "s#SOURCEDIR#${DEMOWD}#" ${DEMOWD}/qmstr.tmpl >  ${DEMOWD}/qmstr.yaml
 run_qmstr_master
 
 JSONC_BRANCH="master"
 
+pushd ${DEMOWD}
 setup_git_src https://github.com/json-c/json-c.git master json-c
 
 pushd json-c
@@ -36,8 +40,8 @@ make -j4
 LIBRARY_PATH=$(pwd)/.libs
 
 popd
-export C_INCLUDE_PATH="$(pwd)"
-pushd ${BASEDIR}/Calculator
+export C_INCLUDE_PATH="${DEMOWD}"
+pushd ${DEMOWD}/Calculator
 make clean
 
 export LIBRARY_PATH
