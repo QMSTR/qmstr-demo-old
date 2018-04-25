@@ -58,6 +58,8 @@ qmstr-cli $ADDRESS analyze
 echo "[INFO] Analysis finished. Triggering reporting."
 qmstr-cli $ADDRESS report
 
+docker cp ${MASTER_CONTAINER_NAME}:/qmstr-reports.tar.bz2 ${DEMOWD}
+
 # Remove json-c folder
 echo "deleting temporary directory json-c"
 rm -rf ${DEMOWD}/json-c 
