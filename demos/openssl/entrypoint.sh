@@ -45,6 +45,8 @@ qmstr-cli $ADDRESS analyze
 echo "[INFO] Analysis finished. Triggering reporting."
 qmstr-cli $ADDRESS report
 
+docker cp ${MASTER_CONTAINER_NAME}:/qmstr-reports.tar.bz2 ${DEMOWD}
+
 # Remove openssl folder
 echo "deleting temporary directory openssl"
 rm -rf ${DEMOWD}/openssl
