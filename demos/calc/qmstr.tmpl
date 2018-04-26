@@ -10,6 +10,7 @@ package:
     dbworkers: 4
   analysis:
     - analyzer: spdx-analyzer
+      name: "Simple SPDX Analyzer"
       selector: sourcecode
       pathsub:
         - old: "SOURCEDIR"
@@ -17,6 +18,7 @@ package:
       config:
         workdir: "/buildroot"
     - analyzer: scancode-analyzer
+      name: "Scancode Analyzer"
       selector: sourcecode
       pathsub:
         - old: "SOURCEDIR"
@@ -27,6 +29,7 @@ package:
       #  cached: "true"
   reporting:
     - reporter: qmstr-reporter-html
+      name: "HTML Reporter"
       config:
         siteprovider: "Endocode"
         baseurl: "http://qmstr.org/packages/"
