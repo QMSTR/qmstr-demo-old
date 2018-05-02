@@ -3,9 +3,9 @@ set -e
 
 trap cleanup_master EXIT
 
-echo "####################"
-echo "Running Calculator demo"
-echo "####################"
+echo "###########################"
+echo "# Running Calculator demo #"
+echo "###########################"
 
 if [ "$(uname -s)" = 'Linux' ]; then
 DEMOWD="$(dirname "$(readlink -f "$0")")"
@@ -62,6 +62,6 @@ docker cp ${MASTER_CONTAINER_NAME}:/qmstr-reports.tar.bz2 ${DEMOWD}
 
 # Remove json-c folder
 echo "deleting temporary directory json-c"
-rm -rf ${DEMOWD}/json-c 
+rm -rf ${DEMOWD}/json-c
 
 echo "Build finished."

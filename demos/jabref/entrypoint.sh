@@ -3,9 +3,9 @@ set -e
 
 trap cleanup_master EXIT
 
-echo "####################"
-echo "Running JabRef demo"
-echo "####################"
+echo "#######################"
+echo "# Running JabRef demo #"
+echo "#######################"
 
 if [ "$(uname -s)" = 'Linux' ]; then
 DEMOWD="$(dirname "$(readlink -f "$0")")"
