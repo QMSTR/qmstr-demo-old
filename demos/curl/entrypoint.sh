@@ -3,9 +3,9 @@ set -e
 
 trap cleanup_master EXIT
 
-echo "####################"
-echo "Running cURL demo"
-echo "####################"
+echo "#####################"
+echo "# Running cURL demo #"
+echo "#####################"
 
 if [ "$(uname -s)" = 'Linux' ]; then
 DEMOWD="$(dirname "$(readlink -f "$0")")"
@@ -45,7 +45,7 @@ echo "master server up and running"
 
 echo "[INFO] Start curl build"
 cmake ..
-make 
+make
 
 echo "[INFO] Build finished. Triggering analysis."
 qmstr-cli $ADDRESS analyze

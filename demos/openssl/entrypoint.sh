@@ -3,9 +3,9 @@ set -e
 
 trap cleanup_master EXIT
 
-echo "####################"
-echo "Running OpenSSL demo"
-echo "####################"
+echo "########################"
+echo "# Running OpenSSL demo #"
+echo "########################"
 
 if [ "$(uname -s)" = 'Linux' ]; then
 DEMOWD="$(dirname "$(readlink -f "$0")")"
@@ -21,7 +21,7 @@ newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)
 export PATH=$newPath
 echo "Path adjusted to enable Quartermaster instrumentation: $PATH"
 
-sed "s#SOURCEDIR#${DEMOWD}#" ${DEMOWD}/qmstr.tmpl >  ${DEMOWD}/qmstr.yaml
+sed "s#SOURCEDIR#${DEMOWD}#" ${DEMOWD}/qmstr.tmpl > ${DEMOWD}/qmstr.yaml
 run_qmstr_master
 
 pushd ${DEMOWD}
