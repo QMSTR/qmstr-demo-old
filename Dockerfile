@@ -1,5 +1,5 @@
 FROM runtime as demobase
-# install runtime deps 
+# install runtime deps
 RUN apt-get update
 RUN apt-get install -y docker.io wget
 
@@ -34,7 +34,7 @@ RUN cd qmstr-gradle-plugin && ./gradlew install
 
 # calc demo case
 FROM demobase as democalc
-# install runtime deps 
+# install runtime deps
 RUN apt-get update
 RUN apt-get install -y libtool pkgconf
 
@@ -42,15 +42,15 @@ ENTRYPOINT [ "/demos/calc/entrypoint.sh" ]
 
 # curl demo case
 FROM demobase as democurl
-# install runtime deps 
+# install runtime deps
 RUN apt-get update
-RUN apt-get install -y cmake libtool pkgconf libssl-dev 
+RUN apt-get install -y cmake libtool pkgconf libssl-dev
 
 ENTRYPOINT [ "/demos/curl/entrypoint.sh" ]
 
 # jabref [Gradle] demo case
 FROM demobase as demojabref
-# install runtime deps 
+# install runtime deps
 RUN apt-get update
 RUN apt-get install -y openjdk-8-jdk openjfx
 
@@ -58,9 +58,9 @@ COPY --from=javabuilder /root/.m2 /root/.m2
 
 ENTRYPOINT [ "/demos/jabref/entrypoint.sh" ]
 
-#openssl demo case 
+#openssl demo case
 FROM demobase as demoopenssl
-# install runtime deps 
+# install runtime deps
 RUN apt-get update
 RUN apt-get install -y libtool pkgconf perl libssl-dev
 
