@@ -21,7 +21,7 @@ echo "Path adjusted to enable Quartermaster instrumentation: $PATH"
 
 source ${DEMOWD}/../../build.inc
 
-sed "s#SOURCEDIR#${DEMOWD}#" ${DEMOWD}/qmstr.tmpl >  ${DEMOWD}/qmstr.yaml
+sed "s#SOURCEDIR#${DEMOWD}#" ${DEMOWD}/qmstr.tmpl > ${DEMOWD}/qmstr.yaml
 run_qmstr_master
 
 JSONC_BRANCH="master"
