@@ -14,7 +14,7 @@ pipeline {
         stage('Clone sources') {
             steps {
                 dir('qmstr-master') {
-                    git credentialsId: '6374572f-c47a-4939-beda-2ee601d65ff7' poll: false, url: 'https://github.com/Endocode/qmstr'
+                    git credentialsId: '6374572f-c47a-4939-beda-2ee601d65ff7', poll: false, url: 'https://github.com/Endocode/qmstr'
                 }
                 dir("qmstr-demo"){
                     git credentialsId: '6374572f-c47a-4939-beda-2ee601d65ff7', branch: '${BRANCH_NAME}', poll: false, url: 'https://github.com/Endocode/qmstr-demo'
