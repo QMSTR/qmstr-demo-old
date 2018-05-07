@@ -18,6 +18,14 @@ package:
           new: "/buildroot"
       config:
         workdir: "/buildroot"
+    - analyzer: test-analyzer
+      name: "Test Analyzer"
+      selector: objectfile
+      pathsub:
+        - old: "SOURCEDIR"
+          new: "/buildroot"
+      config:
+        workdir: "/buildroot"
     - analyzer: scancode-analyzer
       name: "Scancode Analyzer"
       selector: sourcecode
