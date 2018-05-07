@@ -8,7 +8,11 @@ function cleanup_master() {
 function run_qmstr_prod() {
     cleanup_master
     echo "Running qmstr-master container"
-    docker run --name ${MASTER_CONTAINER_NAME} --rm -d -p 50051:50051 -v "${HOSTDEMODIR:-$(pwd)}":/buildroot --net qmstrnet qmstr/master
+
+    MASTER_PORT=$(shuf -i 50000-51000 -n 1)
+    echo "Running $MASTER_CONTAINER_NAME container"
+    docker run --name ${MASTER_CONTAINER_NAME} --rm -d -p ${MASTER_PORT}:50051 -v "${HOSTDEMODIR:-$(pwd)}":/buildroot --net qmstrnet qmstr/master
+    export QMSTR_ADDRESS="${MASTER_CONTAINER_NAME}:50051"
 }
 
 function run_qmstr_dev() {
@@ -41,6 +45,12 @@ function init() {
 }
 
 function run_qmstr_master() {
+
+    if [ -z "$MASTER_CONTAINER_NAME" ]; then
+        echo "No master container name defined, using default: qmstr-demo-master"
+        MASTER_CONTAINER_NAME="qmstr-demo-master"
+    fi
+    
     if [ -n "${QMSTR_DEV+x}" ]; then
         echo "qmstr-master development container selected"
         run_qmstr_dev
