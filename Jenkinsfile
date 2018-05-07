@@ -46,7 +46,7 @@ pipeline {
                 }
                 stage('server side'){
                     steps{
-                        sh 'docker ps && sleep 10 && docker logs ${MASTER_CONTAINER_NAME} -f'
+                        sh 'sleep 10 && docker ps && docker logs ${MASTER_CONTAINER_NAME} -f'
                     }
                 }
             }
@@ -55,10 +55,8 @@ pipeline {
             steps {
                 dir("web"){
                     withEnv(["PATH+SNAP=/snap/bin"]){
-                        sh 'cat ./.gitmodules | sed "s/git@github.com:devcows\\/hugo-universal-theme.git/https:\\/\\/github.com\\/devcows\\/hugo-universal-theme.git/g;w .gitmodules"'
-                        sh 'cat ./.gitmodules | sed "s/git@github.com:endocode\\/databranches.git/https:\\/\\/github.com\\/endocode\\/databranches.git/g;w .gitmodules"'
                         sh 'git submodule init && git submodule update'
-                        sh 'cp ${WORKSPACE}/qmstr-demo/demos/jabref/qmstr-reports.tar.bz2 ./'
+                        sh 'cp ${WORKSPACE}/qmstr-demo/demos/curl/qmstr-reports.tar.bz2 ./'
                         sh '(cd ./static && tar xvjf ../qmstr-reports.tar.bz2 && mv ./reports ./packages)'
                         sh './scripts/generate-data-branch.sh ./tempfolder'
                         sh 'git config http.sslVersion tlsv1.2'

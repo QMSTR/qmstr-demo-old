@@ -1,4 +1,3 @@
-MASTER_CONTAINER_NAME="qmstr-demo-master"
 
 function cleanup_master() {
     qmstr-cli quit | true
@@ -50,7 +49,7 @@ function run_qmstr_master() {
         echo "No master container name defined, using default: qmstr-demo-master"
         MASTER_CONTAINER_NAME="qmstr-demo-master"
     fi
-    
+
     if [ -n "${QMSTR_DEV+x}" ]; then
         echo "qmstr-master development container selected"
         run_qmstr_dev
