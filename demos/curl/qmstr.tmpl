@@ -28,6 +28,14 @@ package:
         workdir: "/buildroot"
         resultfile: "/buildroot/scancode.json"
       #  cached: "true"
+    - analyzer: pyqmstr-spdx-analyzer
+      name: "SPDX Analyzer"
+      selector: sourcecode
+      pathsub:
+        - old: "SOURCEDIR"
+          new: "/buildroot"
+      config:
+        workdir: "/buildroot"
   reporting:
     - reporter: qmstr-reporter-html
       name: "HTML Reporter"
