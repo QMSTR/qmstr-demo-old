@@ -53,7 +53,7 @@ qmstr-cli $ADDRESS analyze
 echo "[INFO] Analysis finished. Triggering reporting."
 qmstr-cli $ADDRESS report
 
-docker cp ${MASTER_CONTAINER_NAME}:/qmstr-reports.tar.bz2 ${DEMOWD}
+docker cp ${MASTER_CONTAINER_NAME}:/var/qmstr/qmstr-reporter-html/qmstr-reports.tar.bz2 ${DEMOWD}
 
 # Remove curl folder
 echo "deleting temporary directory curl"
