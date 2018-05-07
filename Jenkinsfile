@@ -1,6 +1,10 @@
 pipeline {
     agent any
 
+    environment {
+        MASTER_CONTAINER_NAME="qmstr-demo-master_${BUILD_NUMBER}"
+    }
+
     stages {
         stage('Clean') {
             steps {
@@ -10,7 +14,7 @@ pipeline {
         stage('Clone sources') {
             steps {
                 dir('qmstr-master') {
-                    git credentialsId: '6374572f-c47a-4939-beda-2ee601d65ff7', poll: false, url: 'https://github.com/Endocode/qmstr'
+                    git credentialsId: '6374572f-c47a-4939-beda-2ee601d65ff7', poll: false, url: 'https://github.com/QMSTR/qmstr'
                 }
                 dir("qmstr-demo"){
                     git credentialsId: '6374572f-c47a-4939-beda-2ee601d65ff7', branch: '${BRANCH_NAME}', poll: false, url: 'https://github.com/Endocode/qmstr-demo'
@@ -27,7 +31,7 @@ pipeline {
                     sh 'docker build -f ./ci/Dockerfile -t qmstr/master --target master .'
                 }
                 dir("qmstr-demo"){
-                    sh 'docker build -t qmstr/demojabref --target demojabref .'
+                    sh 'docker build -t qmstr/democurl --target democurl .'
                 }
             }
         }
@@ -36,13 +40,13 @@ pipeline {
                 stage('client side'){
                     steps{
                         dir("qmstr-demo"){
-                            sh 'docker run --name demojabref --privileged -v $(pwd)/demos:/demos -v /var/run/docker.sock:/var/run/docker.sock -e PWD_DEMOS=$(pwd)/demos/jabref --net qmstrnet --rm qmstr/demojabref' 
+                            sh './rundemo.sh'
                         }
                     }
                 }
                 stage('server side'){
                     steps{
-                        sh 'docker ps && sleep 10 && docker logs qmstr-demo-master -f'
+                        sh 'docker ps && sleep 10 && docker logs ${MASTER_CONTAINER_NAME} -f'
                     }
                 }
             }
@@ -63,12 +67,6 @@ pipeline {
                         }
                     }
                 }
-            }
-        }
-        stage('Cleanup') {
-            steps {
-                sh 'echo something'
-                //sh 'docker network rm ${QMSTR_NETWORK}'
             }
         }
     }
