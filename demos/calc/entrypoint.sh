@@ -35,7 +35,7 @@ git clean -fxd
 ADDRESS=$(check_qmstr_address)
 
 echo "Waiting for qmstr-master server"
-qmstr-cli $ADDRESS wait
+qmstr-cli $ADDRESS wait -t 1000
 echo "master server up and running"
 
 sh autogen.sh
