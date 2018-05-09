@@ -28,6 +28,14 @@ package:
         workdir: "/buildroot"
         resultfile: "/buildroot/scancode.json"
       #  cached: "true"
+    - analyzer: test-analyzer
+      name: "Simple CI Test Analyzer"
+      selector: sourcecode
+      pathsub:
+        - old: "SOURCEDIR"
+          new: "/buildroot"
+      config:
+        workdir: "/buildroot"
     - analyzer: pyqmstr-spdx-analyzer
       name: "SPDX Analyzer"
       selector: sourcecode
