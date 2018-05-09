@@ -34,7 +34,7 @@ patch -p1  < ${DEMOWD}/add-qmstr.patch
 
 ADDRESS=$(check_qmstr_address)
 echo "Waiting for qmstr-master server"
-qmstr-cli $ADDRESS wait
+qmstr-cli $ADDRESS wait -t 300
 
 echo "[INFO] Start gradle build"
 ./gradlew qmstr
