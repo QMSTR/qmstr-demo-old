@@ -1,4 +1,4 @@
-FROM runtime as demobase
+FROM qmstr/runtime as demobase
 # install runtime deps
 RUN apt-get update
 RUN apt-get install -y docker.io wget
