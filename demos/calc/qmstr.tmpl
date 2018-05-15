@@ -9,6 +9,15 @@ package:
     dbaddress: "localhost:9080"
     dbworkers: 4
   analysis:
+    - analyzer: pkg-analyzer
+      name: "Package Analyzer"
+      selector: linkedtarget
+      pathsub:
+        - old: "SOURCEDIR"
+          new: "/buildroot"
+      config:
+        targetdir: "/buildroot/Calculator/"
+        targets: "calc;libcalc.so"
     - analyzer: spdx-analyzer
       name: "Simple SPDX Analyzer"
       selector: sourcecode

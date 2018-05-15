@@ -9,6 +9,15 @@ package:
     dbaddress: "localhost:9080"
     dbworkers: 4
   analysis:
+    - analyzer: pkg-analyzer
+      name: "Package Analyzer"
+      selector: jarfile
+      pathsub:
+        - old: "SOURCEDIR"
+          new: "/buildroot"
+      config:
+        targetdir: "/buildroot/jabref/"
+        targets: "build/libs/JabRef-4.3-dev.jar"
     - analyzer: spdx-analyzer
       name: "Simple SPDX Analyzer"
       selector: sourcecode
