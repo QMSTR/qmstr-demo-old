@@ -35,14 +35,6 @@ package:
           new: "/buildroot"
       config:
         workdir: "/buildroot"
-    - analyzer: pyqmstr-spdx-analyzer
-      name: "SPDX Analyzer"
-      selector: sourcecode
-      pathsub:
-        - old: "SOURCEDIR"
-          new: "/buildroot"
-      config:
-        workdir: "/buildroot"
   reporting:
     - reporter: test-reporter
       name: "Test Reporter"
