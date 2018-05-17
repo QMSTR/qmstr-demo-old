@@ -1,18 +1,20 @@
 diff --git a/build.gradle b/build.gradle
-index 28061e1b2..a93dcdb9c 100644
+index b2005e933..32e1e200f 100644
 --- a/build.gradle
 +++ b/build.gradle
-@@ -14,6 +14,7 @@ buildscript {
+@@ -12,6 +12,9 @@ buildscript {
+             url 'https://oss.sonatype.org/content/groups/public'
+         }
      }
-     dependencies {
-         classpath 'org.junit.platform:junit-platform-gradle-plugin:1.2.0-M1'
-+        classpath "org.qmstr.gradle:qmstr-plugin:0.1"
-     }
++    dependencies {
++         classpath "org.qmstr.gradle:qmstr-plugin:0.1"
++     }
  }
  
-@@ -43,6 +44,8 @@ apply plugin: 'me.champeau.gradle.jmh'
+ plugins {
+@@ -39,6 +42,8 @@ apply plugin: 'install4j'
+ apply plugin: 'me.champeau.gradle.jmh'
  apply plugin: 'checkstyle'
- apply plugin: 'org.junit.platform.gradle.plugin'
  
 +apply plugin: 'qmstr'
 +
