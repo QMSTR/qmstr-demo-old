@@ -27,11 +27,7 @@ pipeline {
         stage('Build master and client images') {
             steps {
                 dir("qmstr-master"){
-                    sh 'docker build -f ./ci/Dockerfile -t runtime --target runtime .'
-                    sh 'docker build -f ./ci/Dockerfile -t qmstr/master --target master .'
-                }
-                dir("qmstr-demo"){
-                    sh 'docker build -t qmstr/democurl --target democurl .'
+                    sh 'make container'
                 }
             }
         }
@@ -40,13 +36,16 @@ pipeline {
                 stage('client side'){
                     steps{
                         dir("qmstr-demo"){
-                            sh './rundemo.sh'
+                            sh 'make calc'
                         }
                     }
                 }
                 stage('server side'){
                     steps{
-                        sh 'sleep 10 && docker ps && docker logs ${MASTER_CONTAINER_NAME} -f'
+                        dir("qmstr-master"){
+                            sh 'make out/qmstr-cli'
+                            sh 'out/qmstr-cli wait && docker logs ${MASTER_CONTAINER_NAME} -f'
+                        }
                     }
                 }
             }
