@@ -5,7 +5,7 @@ RUN apt-get install -y docker.io wget
 
 COPY --from=qmstr/master_build /usr/local/bin/qmstr /usr/local/bin/qmstr
 COPY --from=qmstr/master_build /usr/local/bin/qmstr-wrapper /usr/local/bin/qmstr-wrapper
-COPY --from=qmstr/master_build /usr/local/bin/qmstr-cli /usr/local/bin/qmstr-cli
+COPY --from=qmstr/master_build /usr/local/bin/qmstrctl /usr/local/bin/qmstrctl
 
 ENV GOPATH /go
 ENV PATH ${GOPATH}/bin:/usr/lib/go-1.9/bin:$PATH
