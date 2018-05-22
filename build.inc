@@ -1,6 +1,6 @@
 
 function cleanup_master() {
-    qmstr-cli quit | true
+    qmstrctl quit | true
     docker rm -f ${MASTER_CONTAINER_NAME} | true
 }
 
