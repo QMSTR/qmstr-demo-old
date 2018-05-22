@@ -47,8 +47,8 @@ pipeline {
                 stage('server side'){
                     steps{
                         dir("qmstr-master"){
-                            sh 'make out/qmstr-cli'
-                            sh 'out/qmstr-cli wait && docker logs ${MASTER_CONTAINER_NAME} -f'
+                            sh 'make out/qmstrctl'
+                            sh 'out/qmstrctl wait && docker logs ${MASTER_CONTAINER_NAME} -f'
                         }
                     }
                 }
