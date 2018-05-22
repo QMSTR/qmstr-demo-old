@@ -1,4 +1,4 @@
-SPDXVersion: SPDX-2.1
+SPDXVersion: SPDX-1.2
 DataLicense: CC0-1.0
 DocumentComment: <text>This is the spdx document for the Calculator</text>
 
@@ -28,4 +28,22 @@ PackageDescription: <text>This utility calculates.</text>
 
 PackageCopyrightText: <text> Copyright 2017, 2018 Endocode AG</text>
 
-PackageLicenseDeclared: (GPL-3)
+PackageLicenseDeclared: GPL-3
+PackageLicenseConcluded: GPL-3
+PackageLicenseInfoFromFiles: GPL-3 
+PackageLicenseInfoFromFiles: GPL-3
+PackageLicenseComments: <text>Just GPL 3</text>
+
+
+# File Info
+
+FileName: Calculator/add.c
+FileType: SOURCE
+FileChecksum: SHA1: 7c2f3b2fb26ad864f443bbecee8a059c91c83d26
+LicenseConcluded: GPL-3
+LicenseInfoInFile: GPL-3
+FileCopyrightText: <text>Copyright 2018 Endocode AG</text>
+ArtifactOfProjectName: The Calculator 
+ArtifactOfProjectHomePage: http://www.endocode.com/
+ArtifactOfProjectURI: http://www.endocode.com/
+FileComment: <text>perform addition</text>
