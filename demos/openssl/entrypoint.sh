@@ -30,20 +30,18 @@ setup_git_src https://github.com/openssl/openssl.git master openssl
 pushd openssl
 git clean -fxd
 
-ADDRESS=$(check_qmstr_address)
-
 echo "Waiting for qmstr-master server"
-qmstrctl $ADDRESS wait -t 300
+qmstrctl wait -t 300
 echo "master server up and running"
 
 ./config
 make -j4
 
 echo "[INFO] Build finished. Triggering analysis."
-qmstrctl $ADDRESS analyze
+qmstrctl analyze
 
 echo "[INFO] Analysis finished. Triggering reporting."
-qmstrctl $ADDRESS report
+qmstrctl report
 
 docker cp ${MASTER_CONTAINER_NAME}:/var/qmstr/qmstr-reporter-html/qmstr-reports.tar.bz2 ${DEMOWD}
 

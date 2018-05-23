@@ -32,18 +32,17 @@ git clean -fxd
 echo "Applying qmstr plugin to gradle build configuration"
 patch -p1  < ${DEMOWD}/add-qmstr.patch
 
-ADDRESS=$(check_qmstr_address)
 echo "Waiting for qmstr-master server"
-qmstrctl $ADDRESS wait -t 300
+qmstrctl wait -t 300
 
 echo "[INFO] Start gradle build"
 ./gradlew qmstr
 
 echo "[INFO] Build finished. Triggering analysis."
-qmstrctl $ADDRESS analyze
+qmstrctl analyze
 
 echo "[INFO] Analysis finished. Triggering reporting."
-qmstrctl $ADDRESS report
+qmstrctl report
 
 docker cp ${MASTER_CONTAINER_NAME}:/var/qmstr/qmstr-reporter-html/qmstr-reports.tar.bz2 ${DEMOWD}
 

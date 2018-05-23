@@ -5,16 +5,17 @@ function cleanup_master() {
 }
 
 function run_qmstr_prod() {
+    export QMSTR_MASTER="${MASTER_CONTAINER_NAME}:50051"
     cleanup_master
     echo "Running qmstr-master container"
 
     MASTER_PORT=$(shuf -i 50000-51000 -n 1)
     echo "Running $MASTER_CONTAINER_NAME container"
     docker run --name ${MASTER_CONTAINER_NAME} --rm -d -p ${MASTER_PORT}:50051 -v "${HOSTDEMODIR:-$(pwd)}":/buildroot --net qmstrnet qmstr/master
-    export QMSTR_ADDRESS="${MASTER_CONTAINER_NAME}:50051"
 }
 
 function run_qmstr_dev() {
+    export QMSTR_MASTER="localhost:50051"
     cleanup_master
     if [ -z "$GOPATH" ]; then
         echo "Please set your GOPATH."
@@ -26,7 +27,7 @@ function run_qmstr_dev() {
     echo ######### echo #########
     echo ${E_DEMO:-$(pwd)}
     echo #########
-    docker run --name ${MASTER_CONTAINER_NAME} --rm -d -p 50051:50051 -p 8000:8000 -p 8080:8080 ${QMSTR_DEV:+"-p${QMSTR_DEV}:2345"} ${QMSTR_DEV:+"-eQMSTR_DEV=${QMSTR_DEV}"} ${QMSTR_DEV:+--security-opt seccomp=unconfined} -v "${GOPATH}"/src:/go/src -v "${HOSTDEMODIR:-$(pwd)}":/buildroot qmstr/dev          
+    docker run --name ${MASTER_CONTAINER_NAME} --rm -d -p 50051:50051 -p 8000:8000 -p 8080:8080 ${QMSTR_DEV:+"-p${QMSTR_DEV}:2345"} ${QMSTR_DEV:+"-eQMSTR_DEV=${QMSTR_DEV}"} ${QMSTR_DEV:+--security-opt seccomp=unconfined} -v "${GOPATH}"/src:/go/src -v "${HOSTDEMODIR:-$(pwd)}":/buildroot qmstr/dev
     if [ -n "${QMSTR_DEV}" ]; then
         echo "DEBUGGING: Connect your debugger to port ${QMSTR_DEV}."
     fi
@@ -66,10 +67,3 @@ function setup_git_src() {
     git clone -b "${branch}" --single-branch "${repo_url}" "${dir}" || (cd "${dir}"; git fetch; git reset --hard origin/"${branch}")
 }
 
-function check_qmstr_address() {
-    val=""
-    if [ -n "$QMSTR_ADDRESS" ]; then
-        val="--cserv ${QMSTR_ADDRESS}"
-    fi
-    echo "$val"
-}

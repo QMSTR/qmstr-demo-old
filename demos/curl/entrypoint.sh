@@ -37,10 +37,8 @@ export CC=$GCCPATH/gcc
 export CXX=$GCCPATH/g++
 export CMAKE_LINKER=gcc
 
-ADDRESS=$(check_qmstr_address)
-
 echo "Waiting for qmstr-master server"
-qmstrctl $ADDRESS wait -t 300
+qmstrctl wait -t 300
 echo "master server up and running"
 
 echo "[INFO] Start curl build"
@@ -48,10 +46,10 @@ cmake ..
 make
 
 echo "[INFO] Build finished. Triggering analysis."
-qmstrctl $ADDRESS analyze
+qmstrctl analyze
 
 echo "[INFO] Analysis finished. Triggering reporting."
-qmstrctl $ADDRESS report
+qmstrctl report
 
 docker cp ${MASTER_CONTAINER_NAME}:/var/qmstr/qmstr-reporter-html/qmstr-reports.tar.bz2 ${DEMOWD}
 
