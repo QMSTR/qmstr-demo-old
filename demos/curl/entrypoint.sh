@@ -17,7 +17,7 @@ echo "DEMOWD: $DEMOWD"
 source ${DEMOWD}/../../build.inc
 
 # Use easy mode to create sym link to qmstr-wrapper
-newPath=$(qmstr -keep which gcc | head -n 1 | cut -d '=' -f2)
+newPath=$(qmstr --keep which gcc | head -n 1 | cut -d '=' -f2)
 export PATH=$newPath
 echo "Path adjusted to enable Quartermaster instrumentation: $PATH"
 
