@@ -25,7 +25,7 @@ sed "s#SOURCEDIR#${DEMOWD}#" ${DEMOWD}/qmstr.tmpl > ${DEMOWD}/qmstr.yaml
 run_qmstr_master
 
 pushd ${DEMOWD}
-setup_git_src https://git.fsfe.org/jonas/curl.git reuse-compliant curl
+setup_git_src https://github.com/curl/curl.git master curl
 
 pushd curl
 git clean -fxd
