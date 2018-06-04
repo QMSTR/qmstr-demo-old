@@ -21,6 +21,7 @@ package:
     - analyzer: spdx-analyzer
       name: "Simple SPDX Analyzer"
       selector: sourcecode
+      trustlevel: 300
       pathsub:
         - old: "SOURCEDIR"
           new: "/buildroot"
@@ -29,6 +30,7 @@ package:
     - analyzer: scancode-analyzer
       name: "Scancode Analyzer"
       selector: sourcecode
+      trustlevel: 400
       pathsub:
         - old: "SOURCEDIR"
           new: "/buildroot"
@@ -48,6 +50,7 @@ package:
     - analyzer: pyqmstr-spdx-analyzer
       name: "SPDX Analyzer"
       selector: sourcecode
+      trustlevel: 300
       pathsub:
         - old: "SOURCEDIR"
           new: "/buildroot"
