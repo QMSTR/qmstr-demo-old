@@ -11,16 +11,15 @@ package:
   analysis:
     - analyzer: pkg-analyzer
       name: "Package Analyzer"
-      selector: jarfile
       pathsub:
         - old: "SOURCEDIR"
           new: "/buildroot"
       config:
+        selector: jarfile
         targetdir: "/buildroot/jabref/"
-        targets: "build/libs/JabRef-4.3-dev.jar"
+        targets: "build/libs/JabRef-4.4-dev.jar"
     - analyzer: spdx-analyzer
       name: "Simple SPDX Analyzer"
-      selector: sourcecode
       trustlevel: 300
       pathsub:
         - old: "SOURCEDIR"
@@ -29,7 +28,6 @@ package:
         workdir: "/buildroot"
     - analyzer: scancode-analyzer
       name: "Scancode Analyzer"
-      selector: sourcecode
       trustlevel: 400
       pathsub:
         - old: "SOURCEDIR"
@@ -47,7 +45,6 @@ package:
         workdir: "/buildroot/jabref"
     - analyzer: test-analyzer
       name: "Simple CI Test Analyzer"
-      selector: sourcecode
       pathsub:
         - old: "SOURCEDIR"
           new: "/buildroot"
