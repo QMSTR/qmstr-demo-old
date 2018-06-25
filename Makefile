@@ -1,10 +1,18 @@
-DEMOS := $(shell ls demos) 
+DEMOS := $(shell ls demos)
 HOSTDEMODIR := $(shell pwd)/demos
 
 all: $(DEMOS)
 
-$(DEMOS): Dockerfile
+democontainer: container/Dockerfile
+	@echo "Building demo image"
+	cd container && docker build -t qmstr/demo --target demobase .
+
+javademocontainer: democontainer
+	@echo "Building java demo image"
+	cd container && docker build -t qmstr/javademobase --target javademobase .
+
+$(DEMOS): javademocontainer
 	@echo "Building image for $@"
-	docker build -t qmstr/demo$@ --target demo$@ .
+	cd demos/$@ && docker build -t qmstr/demo$@ .
 	@echo "running $@ demo"
-	docker run --name demo$@ --privileged -v /var/run/docker.sock:/var/run/docker.sock -v ${GOPATH}/src:/go/src -v ${HOSTDEMODIR}:/demos -e HOSTDEMODIR=${HOSTDEMODIR}/$@ --net qmstrnet --rm qmstr/demo$@
+	demos/$@/build.sh

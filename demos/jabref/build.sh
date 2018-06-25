@@ -1,8 +1,6 @@
 #!/bin/bash
 set -e
 
-trap cleanup_master EXIT
-
 echo "#######################"
 echo "# Running JabRef demo #"
 echo "#######################"
@@ -13,17 +11,7 @@ else
 DEMOWD="$(dirname "$(greadlink -f "$0")")"
 fi
 
-echo "DEMOWD: $DEMOWD"
 source ${DEMOWD}/../../build.inc
-
-# Use easy mode to create sym link to qmstr-wrapper
-newPath=$(qmstr --keep which gcc | head -n 1 | cut -d '=' -f2)
-export PATH=$newPath
-echo "Path adjusted to enable Quartermaster instrumentation: $PATH"
-
-sed "s#SOURCEDIR#${DEMOWD}#" ${DEMOWD}/qmstr.tmpl >  ${DEMOWD}/qmstr.yaml
-run_qmstr_master
-
 pushd ${DEMOWD}
 setup_git_src https://github.com/JabRef/jabref.git master jabref
 
@@ -31,23 +19,18 @@ pushd jabref
 git clean -fxd
 echo "Applying qmstr plugin to gradle build configuration"
 patch -p1  < ${DEMOWD}/add-qmstr.patch
+popd
 
 echo "Waiting for qmstr-master server"
-qmstrctl wait -t 300
+eval $(qmstrctl start --wait --verbose)
 
 echo "[INFO] Start gradle build"
-./gradlew qmstr
+qmstr --container qmstr/demojabref ./gradlew qmstr
 
 echo "[INFO] Build finished. Triggering analysis."
-qmstrctl analyze
+qmstrctl analyze --verbose
 
 echo "[INFO] Analysis finished. Triggering reporting."
-qmstrctl report
-
-docker cp ${MASTER_CONTAINER_NAME}:/var/qmstr/qmstr-reporter-html/qmstr-reports.tar.bz2 ${DEMOWD}
-
-# Remove jabref folder
-echo "deleting temporary directory jabref"
-rm -rf ${DEMOWD}/jabref
+qmstrctl report --verbose
 
 echo "[INFO] Build finished."
