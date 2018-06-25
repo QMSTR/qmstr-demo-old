@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-echo "#######################"
-echo "# Running json-c demo #"
-echo "#######################"
+echo "#####################"
+echo "# Running cURL demo #"
+echo "#####################"
 
 if [ "$(uname -s)" = 'Linux' ]; then
 DEMOWD="$(dirname "$(readlink -f "$0")")"
@@ -11,17 +11,23 @@ else
 DEMOWD="$(dirname "$(greadlink -f "$0")")"
 fi
 
+source ${DEMOWD}/../../build.inc
+
 pushd ${DEMOWD}
-source ../../build.inc
-setup_git_src https://github.com/json-c/json-c.git master jsonc
+setup_git_src https://github.com/curl/curl.git master curl
+
+pushd curl
+git clean -fxd
+mkdir build
+popd
 
 echo "Waiting for qmstr-master server"
-eval $(qmstrctl start --wait)
+eval $(qmstrctl start --wait --verbose)
 echo "master server up and running"
 
-qmstr --container qmstr/demojsonc sh autogen.sh
-qmstr --container qmstr/demojsonc ./configure
-qmstr --container qmstr/demojsonc make
+echo "[INFO] Start curl build"
+qmstr --verbose --container qmstr/democurl cmake ..
+qmstr --verbose --container qmstr/democurl make
 
 echo "[INFO] Build finished. Triggering analysis."
 qmstrctl analyze --verbose
