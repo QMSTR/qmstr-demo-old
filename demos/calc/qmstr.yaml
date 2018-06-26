@@ -1,0 +1,54 @@
+package:
+  name: "The Calculator"
+  metadata:
+    Vendor: "Endocode"
+    OcFossLiaison: "Mirko Boehm"
+    OcComplianceContact: "foss@endocode.com"
+  server:
+    rpcaddress: ":50051"
+    dbaddress: "localhost:9080"
+    dbworkers: 4
+  analysis:
+    - analyzer: pkg-analyzer
+      name: "Package Analyzer"
+      selector: linkedtarget
+      config:
+        targetdir: "/buildroot/Calculator/"
+        targets: "calc;libcalc.so"
+    - analyzer: spdx-analyzer
+      name: "Simple SPDX Analyzer"
+      selector: sourcecode
+      trustlevel: 300
+      config:
+        workdir: "/buildroot"
+    - analyzer: scancode-analyzer
+      name: "Scancode Analyzer"
+      selector: sourcecode
+      trustlevel: 400
+      config:
+        workdir: "/buildroot"
+        resultfile: "/buildroot/scancode.json"
+        cached: "true"
+    - analyzer: test-analyzer
+      name: "Simple CI Test Analyzer"
+      selector: sourcecode
+      config:
+        workdir: "/buildroot"
+        tests: "TestPackageNode;TestCalcBuildGraph"
+    - analyzer: pyqmstr-spdx-analyzer
+      name: "SPDX Analyzer"
+      selector: sourcecode
+      trustlevel: 300
+      config:
+        spdxfile: "/buildroot/SPDX.tag"
+  reporting:
+    - reporter: test-reporter
+      name: "Test Reporter"
+      config:
+        siteprovider: "Endocode"
+    - reporter: qmstr-reporter-html
+      name: "HTML Reporter"
+      config:
+        siteprovider: "Endocode"
+        baseurl: "http://qmstr.org/packages/"
+        outputdir: /buildroot/
