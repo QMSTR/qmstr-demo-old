@@ -4,6 +4,5 @@ demos/calc/Calculator
 demos/calc/json-c
 **/ana.yaml
 demos/curl/curl
-**/qmstr.yaml
 *.DS_Store
 demos/jabref/jabref
