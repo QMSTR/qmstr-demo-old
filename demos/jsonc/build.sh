@@ -29,4 +29,6 @@ qmstrctl analyze --verbose
 echo "[INFO] Analysis finished. Triggering reporting."
 qmstrctl report --verbose
 
+qmstrctl quit
+
 echo "Build finished."
