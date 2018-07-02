@@ -35,6 +35,11 @@ package:
       config:
         workdir: "/buildroot"
         tests: "TestPackageNode"
+    - analyzer: pyqmstr-spdx-analyzer
+      name: "SPDX Analyzer"
+      trustlevel: 300
+      config:
+        spdxfile: "/buildroot/SPDX.tag"
   reporting:
     - reporter: test-reporter
       name: "Test Reporter"
