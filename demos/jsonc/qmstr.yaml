@@ -13,7 +13,7 @@ package:
       name: "Package Analyzer"
       config:
         targetdir: "/buildroot/jsonc/.libs"
-        targets: "libjson-c.*{so,dylib}.*"
+        targets: "libjson-c\\.(?:so)|(?:dylib)\\.\\d\\.\\d.\\d"
     - analyzer: spdx-analyzer
       name: "Simple SPDX Analyzer"
       trustlevel: 300
