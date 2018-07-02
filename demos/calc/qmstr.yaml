@@ -11,19 +11,16 @@ package:
   analysis:
     - analyzer: pkg-analyzer
       name: "Package Analyzer"
-      selector: linkedtarget
       config:
         targetdir: "/buildroot/Calculator/"
         targets: "calc;libcalc.so"
     - analyzer: spdx-analyzer
       name: "Simple SPDX Analyzer"
-      selector: sourcecode
       trustlevel: 300
       config:
         workdir: "/buildroot"
     - analyzer: scancode-analyzer
       name: "Scancode Analyzer"
-      selector: sourcecode
       trustlevel: 400
       config:
         workdir: "/buildroot"
@@ -31,13 +28,11 @@ package:
       #  cached: "true"
     - analyzer: test-analyzer
       name: "Simple CI Test Analyzer"
-      selector: sourcecode
       config:
         workdir: "/buildroot"
         tests: "TestPackageNode;TestCalcBuildGraph"
     - analyzer: pyqmstr-spdx-analyzer
       name: "SPDX Analyzer"
-      selector: sourcecode
       trustlevel: 300
       config:
         spdxfile: "/buildroot/SPDX.tag"
