@@ -14,7 +14,7 @@ ReviewDate: 2018-05-17T00:00:00Z
 ReviewComment: <text>LGTM</text>
 
 ## Package Information
-PackageName: The Calculator 
+PackageName: The Calculator
 PackageVersion: Version 0.1
 PackageDownloadLocation: http://www.example.org/thecalc
 PackageSummary: <text>A simple calculation utility</text>
@@ -30,7 +30,7 @@ PackageCopyrightText: <text> Copyright 2017, 2018 Endocode AG</text>
 
 PackageLicenseDeclared: GPL-3
 PackageLicenseConcluded: GPL-3
-PackageLicenseInfoFromFiles: GPL-3 
+PackageLicenseInfoFromFiles: GPL-3
 PackageLicenseInfoFromFiles: GPL-3
 PackageLicenseComments: <text>Just GPL 3</text>
 
@@ -43,7 +43,7 @@ FileChecksum: SHA1: 7c2f3b2fb26ad864f443bbecee8a059c91c83d26
 LicenseConcluded: GPL-3
 LicenseInfoInFile: GPL-3
 FileCopyrightText: <text>Copyright 2018 Endocode AG</text>
-ArtifactOfProjectName: The Calculator 
+ArtifactOfProjectName: The Calculator
 ArtifactOfProjectHomePage: http://www.endocode.com/
 ArtifactOfProjectURI: http://www.endocode.com/
 FileComment: <text>perform addition</text>
