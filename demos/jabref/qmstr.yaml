@@ -13,7 +13,7 @@ package:
       name: "Package Analyzer"
       config:
         targetdir: "/buildroot/jabref/"
-        targets: "build/libs/JabRef-4.3-dev.jar"
+        targets: "build/libs/JabRef-.+-dev.jar"
     - analyzer: git-analyzer
       name: "Git Analyzer"
       config:
