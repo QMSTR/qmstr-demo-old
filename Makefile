@@ -1,22 +1,38 @@
-DEMOS := $(shell ls demos)
-HOSTDEMODIR := $(shell pwd)/demos
+DEMOS := $(shell ls demos | grep -v java)
+JAVA_DEMOS := $(patsubst java-%, %, $(shell ls demos | grep java))
+IMAGE_PREFIX := qmstr
+DEMO_IMAGES := $(foreach demo, $(DEMOS), $(demo)demo)
+JAVADEMO_IMAGES := $(foreach demo, $(JAVA_DEMOS), java-$(demo)demo)
+
 
 ifdef http_proxy
 	DOCKER_PROXY = --build-arg http_proxy=$(http_proxy)
 endif
 
-all: $(DEMOS)
+all: $(DEMOS) $(JAVA_DEMOS)
 
-democontainer: container/Dockerfile
+.PHONY: demobase javademobase demoimage
+
+demobase: container/Dockerfile
 	@echo "Building demo image"
 	cd container && docker build -t qmstr/demo --target demobase ${DOCKER_PROXY} .
 
-javademocontainer: democontainer
+javademobase: container/Dockerfile
 	@echo "Building java demo image"
 	cd container && docker build -t qmstr/javademobase --target javademobase ${DOCKER_PROXY} .
 
-$(DEMOS): javademocontainer
-	@echo "Building image for $@"
-	cd demos/$@ && docker build -t qmstr/demo$@ ${DOCKER_PROXY} .
+$(DEMO_IMAGES): demobase
+	@echo "Building image $@"
+	cd demos/$(@:%demo=%) && docker build -t $(IMAGE_PREFIX)/$@ ${DOCKER_PROXY} .
+
+$(JAVADEMO_IMAGES): javademobase
+	@echo "Building image $@"
+	cd demos/$(@:%demo=%) && docker build -t $(IMAGE_PREFIX)/$@ ${DOCKER_PROXY} .
+
+demos/%: %demo
 	@echo "running $@ demo"
-	demos/$@/build.sh
+	$@/build.sh
+
+$(DEMOS): %: demos/%
+
+$(JAVA_DEMOS): %: demos/java-%

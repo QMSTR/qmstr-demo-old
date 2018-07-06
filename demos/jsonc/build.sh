@@ -19,9 +19,9 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait)
 echo "master server up and running"
 
-qmstr --container qmstr/demojsonc sh autogen.sh
-qmstr --container qmstr/demojsonc ./configure
-qmstr --container qmstr/demojsonc make
+qmstr --container qmstr/jsoncdemo -- sh autogen.sh
+qmstr --container qmstr/jsoncdemo -- ./configure
+qmstr --container qmstr/jsoncdemo -- make
 
 echo "[INFO] Build finished. Triggering analysis."
 qmstrctl analyze --verbose

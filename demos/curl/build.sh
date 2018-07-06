@@ -26,8 +26,8 @@ eval $(qmstrctl start --wait --verbose)
 echo "master server up and running"
 
 echo "[INFO] Start curl build"
-qmstr --verbose --container qmstr/democurl -- cmake ..
-qmstr --verbose --container qmstr/democurl -- make
+qmstr --verbose --container qmstr/curldemo -- cmake ..
+qmstr --verbose --container qmstr/curldemo -- make
 
 echo "[INFO] Build finished. Triggering analysis."
 qmstrctl analyze --verbose

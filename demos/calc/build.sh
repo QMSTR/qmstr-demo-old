@@ -21,7 +21,7 @@ pushd Calculator
 make clean
 popd
 
-qmstr --container qmstr/democalc -- make -j4
+qmstr --container qmstr/calcdemo -- make -j4
 
 echo "[INFO] Build finished. Triggering analysis."
 qmstrctl analyze --verbose
