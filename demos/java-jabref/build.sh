@@ -25,7 +25,7 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait --verbose)
 
 echo "[INFO] Start gradle build"
-qmstr --container qmstr/demojabref ./gradlew qmstr
+qmstr --container qmstr/java-jabrefdemo ./gradlew qmstr
 
 echo "[INFO] Build finished. Triggering analysis."
 qmstrctl analyze --verbose

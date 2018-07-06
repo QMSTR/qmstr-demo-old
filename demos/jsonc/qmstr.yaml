@@ -8,6 +8,7 @@ package:
     rpcaddress: ":50051"
     dbaddress: "localhost:9080"
     dbworkers: 4
+
   analysis:
     - analyzer: pkg-analyzer
       name: "Package Analyzer"
@@ -25,7 +26,7 @@ package:
       config:
         workdir: "/buildroot"
         resultfile: "/buildroot/scancode.json"
-      #  cached: "true"
+        # cached: "true"
     - analyzer: git-analyzer
       name: "Git Analyzer"
       config:

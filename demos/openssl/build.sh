@@ -23,8 +23,8 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --verbose --wait)
 echo "master server up and running"
 
-qmstr --verbose --container qmstr/demoopenssl ./config
-qmstr --verbose --container qmstr/demoopenssl make
+qmstr --verbose --container qmstr/openssldemo -- ./config
+qmstr --verbose --container qmstr/openssldemo -- make
 
 echo "[INFO] Build finished. Triggering analysis."
 qmstrctl analyze --verbose
