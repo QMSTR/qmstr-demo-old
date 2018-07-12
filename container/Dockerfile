@@ -16,12 +16,12 @@ RUN apt-get update && \
     apt-get install -y git && \
     rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/QMSTR/qmstr-gradle-plugin.git
+RUN git clone https://github.com/QMSTR/qmstr.git
 
-RUN mkdir -p .gradle/$(grep zipStorePath /qmstr-gradle-plugin/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2)
-RUN cd .gradle/$(grep zipStorePath /qmstr-gradle-plugin/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2) && wget $(grep distributionUrl /qmstr-gradle-plugin/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2 |sed -e 's#\\##')
+RUN mkdir -p .gradle/$(grep zipStorePath /qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2)
+RUN cd .gradle/$(grep zipStorePath /qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2) && wget $(grep distributionUrl /qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2 |sed -e 's#\\##')
 
-RUN cd qmstr-gradle-plugin && ./gradlew install
+RUN cd qmstr/java/gradle && ./gradlew install
 
 FROM demobase as javademobase
 
