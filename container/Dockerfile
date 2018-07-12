@@ -21,7 +21,7 @@ RUN git clone https://github.com/QMSTR/qmstr.git
 RUN mkdir -p .gradle/$(grep zipStorePath /qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2)
 RUN cd .gradle/$(grep zipStorePath /qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2) && wget $(grep distributionUrl /qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2 |sed -e 's#\\##')
 
-RUN cd qmstr/java/gradle && ./gradlew install
+RUN cd qmstr/java/gradle && ./gradlew test && ./gradlew install
 
 FROM demobase as javademobase
 
