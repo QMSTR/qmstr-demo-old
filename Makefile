@@ -4,6 +4,7 @@ IMAGE_PREFIX := qmstr
 DEMO_IMAGES := $(foreach demo, $(DEMOS), $(demo)demo)
 JAVADEMO_IMAGES := $(foreach demo, $(JAVA_DEMOS), java-$(demo)demo)
 
+EXTRA_BUILD_OPTS ?= ""
 
 ifdef http_proxy
 	DOCKER_PROXY = --build-arg http_proxy=$(http_proxy)
@@ -15,19 +16,19 @@ all: $(DEMOS) $(JAVA_DEMOS)
 
 demobase: container/Dockerfile
 	@echo "Building demo image"
-	cd container && docker build -t qmstr/demo --target demobase ${DOCKER_PROXY} .
+	cd container && docker build -t qmstr/demo --target demobase ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) .
 
 javademobase: container/Dockerfile
 	@echo "Building java demo image"
-	cd container && docker build -t qmstr/javademobase --target javademobase ${DOCKER_PROXY} .
+	cd container && docker build -t qmstr/javademobase --target javademobase ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) .
 
 $(DEMO_IMAGES): demobase
 	@echo "Building image $@"
-	cd demos/$(@:%demo=%) && docker build -t $(IMAGE_PREFIX)/$@ ${DOCKER_PROXY} .
+	cd demos/$(@:%demo=%) && docker build -t $(IMAGE_PREFIX)/$@ ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) .
 
 $(JAVADEMO_IMAGES): javademobase
 	@echo "Building image $@"
-	cd demos/$(@:%demo=%) && docker build -t $(IMAGE_PREFIX)/$@ ${DOCKER_PROXY} .
+	cd demos/$(@:%demo=%) && docker build -t $(IMAGE_PREFIX)/$@ ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) .
 
 demos/%: %demo
 	@echo "running $@ demo"
