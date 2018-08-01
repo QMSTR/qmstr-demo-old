@@ -4,8 +4,6 @@ IMAGE_PREFIX := qmstr
 DEMO_IMAGES := $(foreach demo, $(DEMOS), $(demo)demo)
 JAVADEMO_IMAGES := $(foreach demo, $(JAVA_DEMOS), java-$(demo)demo)
 
-EXTRA_BUILD_OPTS ?= ""
-
 ifdef http_proxy
 	DOCKER_PROXY = --build-arg http_proxy=$(http_proxy)
 endif
