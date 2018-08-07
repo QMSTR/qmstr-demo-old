@@ -16,7 +16,9 @@ RUN apt-get update && \
     apt-get install -y git && \
     rm -rf /var/lib/apt/lists/*
 
-RUN git clone https://github.com/QMSTR/qmstr.git /tmp/qmstr
+ARG QMSTR_BRANCH=master
+ARG QMSTR_FORK=QMSTR
+RUN git clone -b ${QMSTR_BRANCH} --single-branch https://github.com/${QMSTR_FORK}/qmstr.git /tmp/qmstr
 
 RUN mkdir -p .gradle/$(grep zipStorePath /tmp/qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2)
 RUN cd .gradle/$(grep zipStorePath /tmp/qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2) && wget $(grep distributionUrl /tmp/qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2 |sed -e 's#\\##')
