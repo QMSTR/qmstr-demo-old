@@ -1,18 +1,32 @@
+#CC = gcc -wrapper $(shell pwd)/wrapper.sh
 CC = gcc
 DEPS = add.c subtract.c multiply.c devide.c
 OBJS := ${DEPS:c=o}
+TARGETS := calc calcs
+ADDSUB := add.c subtract.c
+MULDIV := multiply.c devide.c
+PUNKTRECHNUNG := punktrechnung.o
 
-all: calc
+all: calc calcs
+
+calcs: libcalc.a
+	$(CC) -static main.c -o $@ $^ -ljson-c
 
 calc: libcalc.so
 	${CC} main.c -o calc -L. -lcalc -ljson-c
 
-libcalc.so: ${OBJS}
-	${CC} -shared -o libcalc.so ${OBJS}
+$(PUNKTRECHNUNG): $(MULDIV)
+	${CC} -nostartfiles -static-libgcc -fPIC -r -o $@ $^
+
+libcalc.so: $(ADDSUB) $(PUNKTRECHNUNG)
+	${CC} -shared -fPIC -o $@ $^
+
+libcalc.a: $(OBJS)
+	ar rcs $@ $^
 
 # When building with more than one job this will be issued more than once. This is done on purpose!
 ${OBJS}: ${DEPS}
 	${CC} -c $^
 
 clean:
-	rm -rf *.o libcalc.so calc
+	rm -rf $(OBJS) $(TARGETS) $(PUNKTRECHNUNG) *.so *.a
