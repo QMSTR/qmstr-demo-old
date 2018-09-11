@@ -42,4 +42,3 @@ package:
       config:
         siteprovider: "Endocode"
         baseurl: "http://qmstr.org/packages/"
-        outputdir: /buildroot/

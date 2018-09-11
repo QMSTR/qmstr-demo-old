@@ -12,8 +12,9 @@ package:
     - analyzer: pkg-analyzer
       name: "Package Analyzer"
       config:
+        selectors: "linkedtarget;ar archive"
         targetdir: "/buildroot/Calculator/"
-        targets: "calc;libcalc.so"
+        targets: "calc;libcalc.so;calcs;libcalc.a"
     - analyzer: spdx-analyzer
       name: "Simple SPDX Analyzer"
       trustlevel: 300
@@ -46,4 +47,3 @@ package:
       config:
         siteprovider: "Endocode"
         baseurl: "http://qmstr.org/packages/"
-        outputdir: /buildroot/
