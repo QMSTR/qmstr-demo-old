@@ -1,4 +1,8 @@
 FROM qmstr/runtime as demobase
+
+RUN apt-get update
+RUN apt-get install -y ccache
+
 # install runtime deps
 COPY --from=qmstr/master_build /usr/local/bin/qmstr /usr/local/bin/qmstr
 COPY --from=qmstr/master_build /usr/local/bin/qmstr-wrapper /usr/local/bin/qmstr-wrapper
