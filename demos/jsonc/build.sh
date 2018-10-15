@@ -23,10 +23,12 @@ qmstr --container qmstr/jsoncdemo -- sh autogen.sh
 qmstr --container qmstr/jsoncdemo -- ./configure
 qmstr --container qmstr/jsoncdemo -- make
 
-echo "[INFO] Build finished. Triggering analysis."
+echo "[INFO] Build finished. Creating snapshot and triggering analysis."
+qmstrctl snapshot -O postbuild-snapshot.tar 
 qmstrctl analyze --verbose
 
-echo "[INFO] Analysis finished. Triggering reporting."
+echo "[INFO] Analysis finished. Creating snapshot and triggering reporting."
+qmstrctl snapshot -O postanalysis-snapshot.tar 
 qmstrctl report --verbose
 
 qmstrctl quit
