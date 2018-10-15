@@ -1,7 +1,6 @@
 FROM qmstr/runtime as demobase
 
-RUN apt-get update
-RUN apt-get install -y ccache
+RUN apt-get update && apt-get install -y ccache
 
 # install runtime deps
 COPY --from=qmstr/master_build /usr/local/bin/qmstr /usr/local/bin/qmstr
@@ -33,8 +32,7 @@ RUN rm -fr /tmp/qmstr
 
 FROM demobase as javademobase
 
-RUN apt-get update
-RUN apt-get install -y openjdk-8-jdk openjfx
+RUN apt-get update && apt-get install -y openjdk-8-jdk openjfx
 
 RUN mkdir -p /maven/conf
 ENV M2_HOME /maven
