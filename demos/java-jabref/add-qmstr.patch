@@ -7,7 +7,7 @@ index b2005e933..32e1e200f 100644
          }
      }
 +    dependencies {
-+         classpath "org.qmstr.gradle:qmstr-plugin:0.1"
++         classpath "org.qmstr.gradle:qmstr-plugin:0.2"
 +     }
  }
  
