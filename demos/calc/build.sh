@@ -31,6 +31,6 @@ echo "[INFO] Analysis finished. Creating snapshot and triggering reporting."
 qmstrctl snapshot -O postanalysis-snapshot.tar
 qmstrctl report --verbose
 
-#qmstrctl quit
+qmstrctl quit
 
 echo "Build finished."
