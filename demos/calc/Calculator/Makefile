@@ -7,7 +7,11 @@ ADDSUB := add.c subtract.c
 MULDIV := multiply.c devide.c
 PUNKTRECHNUNG := punktrechnung.o
 
-all: calc calcs
+all: strip calcs
+
+.PHONY: strip
+strip: calc
+	strip -s calc
 
 calcs: libcalc.a
 	$(CC) -static main.c -o $@ $^ -ljson-c
