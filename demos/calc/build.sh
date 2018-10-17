@@ -24,13 +24,13 @@ popd
 qmstr --container qmstr/calcdemo -- make -j4
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
-qmstrctl snapshot -O postbuild-snapshot.tar 
+qmstrctl snapshot -O postbuild-snapshot.tar
 qmstrctl analyze --verbose
 
 echo "[INFO] Analysis finished. Creating snapshot and triggering reporting."
-qmstrctl snapshot -O postanalysis-snapshot.tar 
+qmstrctl snapshot -O postanalysis-snapshot.tar
 qmstrctl report --verbose
 
-qmstrctl quit
+#qmstrctl quit
 
 echo "Build finished."
