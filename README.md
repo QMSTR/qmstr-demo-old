@@ -1,53 +1,33 @@
 # QMSTR DEMO
 
-In the following demo, you will run [Quartermaster](http://qmstr.org) and use it to compile cURL, in the end you will have the console log of master and client to inspect.
+Quartermaster demo repository contains example projects which are compiled with [Quartermaster](https://github.com/QMSTR/qmstr). Those [projects](https://github.com/QMSTR/qmstr-demo/tree/master/demos) are:
 
-You can also inspect our [CI pipeline](https://ci.endocode.com/blue/organizations/jenkins/QMSTR%2Fqmstr-cURL-demo/activity) being initialized by cURL repo on github. 
+* [cUrl](https://github.com/curl/curl.git)
+* [JabRef](https://github.com/JabRef/jabref.git)
+* [json-c](https://github.com/json-c/json-c.git)
+* [OpenSSL](https://github.com/openssl/openssl.git)
+* [Calculator](https://github.com/QMSTR/qmstr-demo/tree/master/demos/calc) (sample project for testing purposes)
+
+You can run [Quartermaster](https://github.com/QMSTR/qmstr) and compile one or all of these projects. In the end of this process, you will have one or more reports with all the information that have been gathered during the build and analysis phase. For more information please read the documentaion in [Quartermaster](https://github.com/QMSTR/qmstr)
+
+You can also inspect our [CI pipeline](https://ci.endocode.com/blue/organizations/jenkins/QMSTR%2Fqmstr-cURL-demo/activity) being initialized by cURL repo on github.
 
 ## Requirements
 
-Docker
+* Docker
+* [Quartermaster Installation](https://github.com/QMSTR/qmstr)
 
-## Running the demo
+## Running the demos
 
-In order to run QMSTR cURL demo follow the steps:
+Running the demos is Makefile based.
+Running just `make` it will compile all the projects located in the `demos/` directory with Quartermaster:
 
-        mkdir $HOME/demo
-	cd $HOME/demo
-	
-	git clone git@github.com:qmstr/qmstr.git
+	> make
+	...
 
-	git clone git@github.com:qmstr/qmstr-demo.git
+Should you want to compile a specific project run `make` followed by the name of the project you want to compile e.g.:
 
-Create network for docker container to communicate with each other
+	> make curl
+	...
 
-	docker network create qmstrnet
-
-### Build Docker images for Master 
-
-	cd $HOME/demo/qmstr
-
-	docker build -f ci/Dockerfile -t qmstr/master_build --target builder .
-	docker build -f ci/Dockerfile -t qmstr/master --target master .
-	docker build -f ci/Dockerfile -t runtime --target runtime . 
-
-### Build Docker images for Demo
-
-	cd $HOME/demo/qmstr-demo
-
-	docker build -t qmstr/democurl --target democurl .
-
-	./rundemo.sh
-
-You will now see the client side running, in order to see the qmstr master log open a new terminal and run the following command:
-    docker logs qmstr\master -f
-
-### Cleanup
-	docker rmi qmstr/master_build
-	docker rmi qmstr/master
-	docker rmi runtime
-	docker rmi qmstr/democurl
-	docker network rm qmstrnet
-
-For more information you can see the [README](https://github.com/QMSTR/qmstr/blob/master/README.md) of the main repository
-  
+For more information and updates you can visit the [Quartermaster project](http://qmstr.org).
