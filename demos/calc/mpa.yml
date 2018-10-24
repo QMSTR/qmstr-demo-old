@@ -1,6 +1,6 @@
 file:
     - path: Calculator/calc
       name: calc
-      type: linkedtarget
+      type: target
       derivedfrom:
           - path: Calculator/calc

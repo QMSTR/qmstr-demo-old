@@ -16,7 +16,6 @@ package:
     - analyzer: pkg-analyzer
       name: "Package Analyzer"
       config:
-        selectors: "linkedtarget;ar archive"
         targetdir: "/buildroot/Calculator/"
         targets: "calc;libcalc.so;calcs;libcalc.a"
     - analyzer: spdx-analyzer
