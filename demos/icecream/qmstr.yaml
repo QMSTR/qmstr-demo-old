@@ -1,0 +1,44 @@
+package:
+  name: "icecream"
+  metadata:
+    Vendor: "Endocode"
+    OcFossLiaison: "Mirko Boehm"
+    OcComplianceContact: "foss@endocode.com"
+  server:
+    rpcaddress: ":50051"
+    dbaddress: "localhost:9080"
+    dbworkers: 4
+  analysis:
+    - analyzer: pkg-analyzer
+      name: "Package Analyzer"
+      config:
+        targetdir: "/buildroot/icecream/"
+        targets: "client/icecc;daemon/iceccd"
+    - analyzer: git-analyzer
+      name: "Git Analyzer"
+      config:
+        workdir: "buildroot/icecream"
+    - analyzer: spdx-analyzer
+      name: "Simple SPDX Analyzer"
+      config:
+        workdir: "/buildroot"
+    - analyzer: scancode-analyzer
+      name: "Scancode Analyzer"
+      config:
+        workdir: "/buildroot"
+        resultfile: "/buildroot/scancode.json"
+      #cached: "true"
+    - analyzer: test-analyzer
+      name: "Simple CI Test Analyzer"
+      config:
+        workdir: "/buildroot"
+  reporting:
+    - reporter: test-reporter
+      name: "Test Reporter"
+      config:
+        siteprovider: "Endocode"
+    - reporter: qmstr-reporter-html
+      name: "HTML Reporter"
+      config:
+        siteprovider: "Endocode"
+        baseurl: "http://localhost:8080/"
