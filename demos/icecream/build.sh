@@ -1,9 +1,9 @@
 #!/bin/bash
 set -e
 
-echo "#####################"
+echo "#########################"
 echo "# Running Icecream demo #"
-echo "#####################"
+echo "#########################"
 
 if [ "$(uname -s)" = 'Linux' ]; then
 DEMOWD="$(dirname "$(readlink -f "$0")")"
