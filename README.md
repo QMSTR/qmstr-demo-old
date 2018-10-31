@@ -1,14 +1,9 @@
 # QMSTR DEMO
 
-Quartermaster demo repository contains example projects which are compiled with [Quartermaster](https://github.com/QMSTR/qmstr). Those [projects](https://github.com/QMSTR/qmstr-demo/tree/master/demos) are:
+Quartermaster demo repository contains some example projects instrumented to compile with [Quartermaster](https://github.com/QMSTR/qmstr).
+Each demo shows how to instrument a certain project to compile with Quartermaster.
 
-* [cUrl](https://github.com/curl/curl.git)
-* [JabRef](https://github.com/JabRef/jabref.git)
-* [json-c](https://github.com/json-c/json-c.git)
-* [OpenSSL](https://github.com/openssl/openssl.git)
-* [Calculator](https://github.com/QMSTR/qmstr-demo/tree/master/demos/calc) (sample project for testing purposes)
-
-You can run [Quartermaster](https://github.com/QMSTR/qmstr) and compile one or all of these projects. In the end of this process, you will have one or more reports with all the information that have been gathered during the build and analysis phase. For more information please read the documentaion in [Quartermaster](https://github.com/QMSTR/qmstr)
+After running a demo you will have reports with all the information that have been gathered during the build and analysis phase. For more information please read the documentaion in [Quartermaster](https://github.com/QMSTR/qmstr)
 
 You can also inspect our [CI pipeline](https://ci.endocode.com/blue/organizations/jenkins/QMSTR%2Fqmstr-cURL-demo/activity) being initialized by cURL repo on github.
 
