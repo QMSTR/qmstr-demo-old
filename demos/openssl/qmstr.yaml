@@ -33,5 +33,5 @@ project:
       config:
         #generatehtml: "no"
         siteprovider: "Endocode"
-        baseurl: "http://qmstr.org/packages/"
+        baseurl: "http://localhost:8080/"
         outputdir: /buildroot/
