@@ -41,4 +41,4 @@ package:
       name: "HTML Reporter"
       config:
         siteprovider: "Endocode"
-        baseurl: "http://qmstr.org/packages/"
+        baseurl: "http://localhost:8080/"
