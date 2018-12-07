@@ -22,8 +22,14 @@ calc: libcalc.so
 $(PUNKTRECHNUNG): $(MULDIV)
 	${CC} -nostartfiles -static-libgcc -fPIC -r -o $@ $^
 
-libcalc.so: $(ADDSUB) $(PUNKTRECHNUNG)
+libcalc.so: add.i subtract.i $(PUNKTRECHNUNG)
 	${CC} -shared -fPIC -o $@ $^
+
+add.i: add.c
+	${CC} -E add.c -o add.i
+
+subtract.i: subtract.c
+	${CC} -E subtract.c -o subtract.i
 
 libcalc.a: $(OBJS)
 	ar rcs $@ $^
