@@ -23,12 +23,13 @@ RUN apt-get update && \
 
 ARG QMSTR_BRANCH=master
 ARG QMSTR_FORK=QMSTR
-RUN git clone -b ${QMSTR_BRANCH} --single-branch https://github.com/${QMSTR_FORK}/qmstr.git /tmp/qmstr
+RUN git clone -b ${QMSTR_BRANCH} --single-branch https://github.com/${QMSTR_FORK}/qmstr-gradle-plugin.git /tmp/qmstr-gradle-plugin
 
-RUN mkdir -p .gradle/$(grep zipStorePath /tmp/qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2)
-RUN cd .gradle/$(grep zipStorePath /tmp/qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2) && wget $(grep distributionUrl /tmp/qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2 |sed -e 's#\\##')
+WORKDIR /tmp/qmstr-gradle-plugin
+RUN ./gradlew test --stacktrace
+RUN ./gradlew install --stacktrace
 
-RUN cd /tmp/qmstr/java/gradle && ./gradlew test && ./gradlew install
+RUN cd .gradle/vcs-1/java-qmstr* && cd java-qmstr && ./gradlew install
 
 RUN rm -fr /tmp/qmstr
 

@@ -25,7 +25,7 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait --verbose)
 
 echo "[INFO] Start gradle build"
-qmstr --container qmstr/java-jabrefdemo ./gradlew qmstr
+qmstr --container qmstr/java-jabrefdemo -- ./gradlew qmstr --stacktrace
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f
