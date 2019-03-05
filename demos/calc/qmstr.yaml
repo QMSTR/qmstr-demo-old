@@ -1,4 +1,4 @@
-package:
+project:
   name: "The Calculator"
   metadata:
     Vendor: "Endocode"

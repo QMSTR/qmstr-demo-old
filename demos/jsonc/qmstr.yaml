@@ -1,4 +1,4 @@
-package:
+project:
   name: "json-c"
   metadata:
     Vendor: "Endocode"
