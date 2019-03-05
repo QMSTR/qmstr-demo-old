@@ -1,4 +1,4 @@
-package:
+project:
   name: OpenSSL
   metadata:
     Vendor: "Endocode"

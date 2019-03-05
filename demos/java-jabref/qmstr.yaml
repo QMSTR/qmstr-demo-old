@@ -1,4 +1,4 @@
-package:
+project:
   name: JabRef
   metadata:
     Vendor: "Endocode"

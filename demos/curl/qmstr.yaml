@@ -1,4 +1,4 @@
-package:
+project:
   name: "cURL"
   metadata:
     Vendor: "Endocode"

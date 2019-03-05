@@ -25,6 +25,8 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait --verbose)
 echo "master server up and running"
 
+qmstrctl create package:curl
+
 echo "[INFO] Start curl build"
 qmstr --verbose --container qmstr/curldemo -- cmake ..
 qmstr --verbose --container qmstr/curldemo -- make

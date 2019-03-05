@@ -24,6 +24,8 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait --verbose)
 echo "master server up and running"
 
+qmstrctl create package:icecream
+
 echo "[INFO] Start icecream build"
 qmstr --verbose --container qmstr/icecreamdemo -- ./autogen.sh
 qmstr --verbose --container qmstr/icecreamdemo -- ./configure --prefix=/opt/icecream

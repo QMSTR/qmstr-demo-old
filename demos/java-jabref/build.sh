@@ -24,6 +24,8 @@ popd
 echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait --verbose)
 
+qmstrctl create package:jabref
+
 echo "[INFO] Start gradle build"
 qmstr --container qmstr/java-jabrefdemo ./gradlew qmstr
 

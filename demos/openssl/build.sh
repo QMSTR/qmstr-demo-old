@@ -23,6 +23,8 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --verbose --wait)
 echo "master server up and running"
 
+qmstrctl create package:openssl
+
 qmstr --verbose --container qmstr/openssldemo -- ./config
 qmstr --verbose --container qmstr/openssldemo -- make
 
