@@ -14,7 +14,7 @@ project:
       config:
         targetdir: "/buildroot/openssl/"
         targets: "apps/openssl"
-    - analyzer: spdx-analyzer
+    - analyzer: spdx-identifier-analyzer
       name: "Simple SPDX Analyzer"
       config:
         workdir: "/buildroot"

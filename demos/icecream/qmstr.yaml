@@ -18,7 +18,7 @@ project:
       name: "Git Analyzer"
       config:
         workdir: "buildroot/icecream"
-    - analyzer: spdx-analyzer
+    - analyzer: spdx-identifier-analyzer
       name: "Simple SPDX Analyzer"
       config:
         workdir: "/buildroot"
