@@ -18,7 +18,7 @@ project:
       config:
         targetdir: "/buildroot/Calculator/"
         targets: "calc;libcalc.so;calcs;libcalc.a"
-    - analyzer: spdx-analyzer
+    - analyzer: spdx-identifier-analyzer
       name: "Simple SPDX Analyzer"
       trustlevel: 300
       config:
@@ -35,7 +35,7 @@ project:
       config:
         workdir: "/buildroot"
         tests: "TestPackageNode;TestCalcBuildGraph"
-    - analyzer: pyqmstr-spdx-analyzer
+    - analyzer: spdx-analyzer
       name: "SPDX Analyzer"
       trustlevel: 300
       config:
