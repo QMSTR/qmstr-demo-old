@@ -9,10 +9,6 @@ project:
     dbaddress: "localhost:9080"
     dbworkers: 4
   analysis:
-    - analyzer: missing_pieces-analyzer
-      name: "Missing pieces Analyzer"
-      config:
-        inputfile: "/buildroot/mpa.yml"
     - analyzer: pkg-analyzer
       name: "Package Analyzer"
       config:
