@@ -1,6 +1,0 @@
-file:
-    - path: Calculator/calc
-      name: calc
-      filetype: 3
-      derivedfrom:
-          - path: Calculator/calc
