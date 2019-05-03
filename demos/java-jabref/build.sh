@@ -24,10 +24,12 @@ popd
 echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait --verbose)
 
-qmstrctl create package:jabref
+qmstrctl create package:jabref --version $(cd jabref && git describe --tags --dirty --long)
 
 echo "[INFO] Start gradle build"
 qmstr --container qmstr/java-jabrefdemo ./gradlew qmstr
+
+qmstrctl connect package:jabref file:$(find jabref -name "JabRef-?.?-dev.jar") 
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f

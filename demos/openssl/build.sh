@@ -23,10 +23,12 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --verbose --wait)
 echo "master server up and running"
 
-qmstrctl create package:openssl
+qmstrctl create package:openssl --version $(cd openssl && git describe --tags --dirty --long)
 
 qmstr --verbose --container qmstr/openssldemo -- ./config
 qmstr --verbose --container qmstr/openssldemo -- make
+
+qmstrctl connect package:openssl file:openssl/apps/openssl
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f
