@@ -9,15 +9,6 @@ project:
     dbaddress: "localhost:9080"
     dbworkers: 4
   analysis:
-    - analyzer: pkg-analyzer
-      name: "Package Analyzer"
-      config:
-        targetdir: "/buildroot/jabref/"
-        targets: "build/libs/JabRef-.+-dev.jar"
-    - analyzer: git-analyzer
-      name: "Git Analyzer"
-      config:
-        workdir: "/buildroot/jabref"
     - analyzer: spdx-identifier-analyzer
       name: "Simple SPDX Analyzer"
       config:

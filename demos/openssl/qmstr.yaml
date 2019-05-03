@@ -9,11 +9,6 @@ project:
     dbaddress: "localhost:9080"
     dbworkers: 4
   analysis:
-    - analyzer: pkg-analyzer
-      name: "Package Analyzer"
-      config:
-        targetdir: "/buildroot/openssl/"
-        targets: "apps/openssl"
     - analyzer: spdx-identifier-analyzer
       name: "Simple SPDX Analyzer"
       config:
@@ -23,15 +18,11 @@ project:
       config:
         workdir: "/buildroot"
         resultfile: "/buildroot/scancode.json"
-      #  # cached: "true"
+        #cached: "true"
     - analyzer: test-analyzer
       name: "Simple CI Test Analyzer"
       config:
         workdir: "/buildroot"
-    - analyzer: git-analyzer
-      name: "Git Analyzer"
-      config:
-        workdir: "/buildroot/openssl"
   reporting:
     - reporter: test-reporter
       name: "Test Reporter"
@@ -40,7 +31,7 @@ project:
     - reporter: qmstr-reporter-html
       name: "HTML Reporter"
       config:
-        # generatehtml: "no"
+        #generatehtml: "no"
         siteprovider: "Endocode"
         baseurl: "http://qmstr.org/packages/"
         outputdir: /buildroot/

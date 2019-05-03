@@ -19,11 +19,13 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait)
 echo "master server up and running"
 
-qmstrctl create project:jsonc
+qmstrctl create project:jsonc --version $(cd jsonc && git describe --always)
 
 qmstr --container qmstr/jsoncdemo -- sh autogen.sh
 qmstr --container qmstr/jsoncdemo -- ./configure
 qmstr --container qmstr/jsoncdemo -- make -j4
+
+qmstrctl connect package:jsonc file:$(find jsonc -name "libjson-c.so.?.*")
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f

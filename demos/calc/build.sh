@@ -17,13 +17,15 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait)
 echo "master server up and running"
 
-qmstrctl create package:calc
+qmstrctl create package:calc --version 00000
 
 pushd Calculator
 make clean
 popd
 
 qmstr --container qmstr/calcdemo -- make -j4
+
+qmstrctl connect package:calc file:Calculator/libcalc.a file:Calculator/calcs file:Calculator/libcalc.so file:Calculator/calc
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f
