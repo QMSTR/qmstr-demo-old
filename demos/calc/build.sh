@@ -17,8 +17,7 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait)
 echo "master server up and running"
 
-qmstrctl create package:calc --version 00000
-
+qmstrctl create package:calc
 pushd Calculator
 make clean
 popd
