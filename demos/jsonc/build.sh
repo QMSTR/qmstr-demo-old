@@ -19,7 +19,7 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait)
 echo "master server up and running"
 
-qmstrctl create project:jsonc --version $(cd jsonc && git describe --always)
+qmstrctl create package:jsonc --version $(cd jsonc && git describe --always)
 
 qmstr --container qmstr/jsoncdemo -- sh autogen.sh
 qmstr --container qmstr/jsoncdemo -- ./configure
