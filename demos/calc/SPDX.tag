@@ -14,7 +14,7 @@ ReviewDate: 2018-05-17T00:00:00Z
 ReviewComment: <text>LGTM</text>
 
 ## Package Information
-PackageName: The Calculator
+PackageName: calc
 PackageVersion: Version 0.1
 PackageDownloadLocation: http://www.example.org/thecalc
 PackageSummary: <text>A simple calculation utility</text>
