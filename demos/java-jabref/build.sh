@@ -27,7 +27,7 @@ eval $(qmstrctl start --wait --verbose)
 qmstrctl create package:jabref --version $(cd jabref && git describe --tags --dirty --long)
 
 echo "[INFO] Start gradle build"
-qmstr --container qmstr/java-jabrefdemo ./gradlew qmstr
+qmstrctl spawn qmstr/java-jabrefdemo ./gradlew qmstr
 
 qmstrctl connect package:jabref file:$(find jabref -name "JabRef-?.?-dev.jar") 
 

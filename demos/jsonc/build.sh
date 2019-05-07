@@ -21,9 +21,9 @@ echo "master server up and running"
 
 qmstrctl create package:jsonc --version $(cd jsonc && git describe --always)
 
-qmstr --container qmstr/jsoncdemo -- sh autogen.sh
-qmstr --container qmstr/jsoncdemo -- ./configure
-qmstr --container qmstr/jsoncdemo -- make -j4
+qmstrctl spawn qmstr/jsoncdemo qmstr run -i /tmp/inst sh autogen.sh
+qmstrctl spawn qmstr/jsoncdemo qmstr run -i /tmp/inst ./configure
+qmstrctl spawn qmstr/jsoncdemo qmstr run -i /tmp/inst make -j4
 
 qmstrctl connect package:jsonc file:$(find jsonc -name "libjson-c.so.?.*")
 
