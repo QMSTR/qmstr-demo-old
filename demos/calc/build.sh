@@ -22,7 +22,7 @@ pushd Calculator
 make clean
 popd
 
-qmstr --container qmstr/calcdemo -- make -j4
+qmstrctl spawn qmstr/calcdemo qmstr run make -j4
 
 qmstrctl connect package:calc file:Calculator/libcalc.a file:Calculator/calcs file:Calculator/libcalc.so file:Calculator/calc
 

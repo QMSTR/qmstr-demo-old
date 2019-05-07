@@ -28,8 +28,8 @@ echo "master server up and running"
 qmstrctl create package:curl --version $(cd curl && git describe --tags --dirty --long)
 
 echo "[INFO] Start curl build"
-qmstr --verbose --container qmstr/curldemo -- cmake ..
-qmstr --verbose --container qmstr/curldemo -- make
+qmstrctl --verbose spawn qmstr/curldemo qmstr run -i /tmp/inst cmake ..
+qmstrctl --verbose spawn qmstr/curldemo qmstr run -i /tmp/inst make
 
 qmstrctl connect package:curl file:curl/build/src/curl file:curl/build/lib/libcurl.so
 

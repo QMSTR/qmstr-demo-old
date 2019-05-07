@@ -25,8 +25,8 @@ echo "master server up and running"
 
 qmstrctl create package:openssl --version $(cd openssl && git describe --tags --dirty --long)
 
-qmstr --verbose --container qmstr/openssldemo -- ./config
-qmstr --verbose --container qmstr/openssldemo -- make
+qmstrctl --verbose spawn qmstr/openssldemo qmstr run -i /tmp/inst ./config
+qmstrctl --verbose spawn qmstr/openssldemo qmstr run -i /tmp/inst make
 
 qmstrctl connect package:openssl file:openssl/apps/openssl
 

@@ -27,9 +27,9 @@ echo "master server up and running"
 qmstrctl create package:icecream --version $(cd icecream && git describe --tags --dirty --long)
 
 echo "[INFO] Start icecream build"
-qmstr --verbose --container qmstr/icecreamdemo -- ./autogen.sh
-qmstr --verbose --container qmstr/icecreamdemo -- ./configure --prefix=/opt/icecream
-qmstr --verbose --container qmstr/icecreamdemo -- make
+qmstrctl --verbose spawn qmstr/icecreamdemo qmstr run -i /tmp/inst ./autogen.sh
+qmstrctl --verbose spawn qmstr/icecreamdemo qmstr run -i /tmp/inst ./configure --prefix=/opt/icecream
+qmstrctl --verbose spawn qmstr/icecreamdemo qmstr run -i /tmp/inst make
 
 qmstrctl connect package:icecream file:icecream/client/icecc file:icecream/daemon/iceccd
 
