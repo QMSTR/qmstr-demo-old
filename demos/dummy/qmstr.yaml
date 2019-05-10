@@ -1,0 +1,17 @@
+project:
+  name: "Dummy project"
+  metadata:
+    Vendor: "Endocode"
+    OcFossLiaison: "Mirko Boehm"
+    OcComplianceContact: "foss@endocode.com"
+  server:
+    rpcaddress: ":50051"
+    dbaddress: "localhost:9080"
+    dbworkers: 4
+  analysis:
+  reporting:
+    - reporter: qmstr-reporter-html
+      name: "HTML Reporter"
+      config:
+        siteprovider: "Endocode"
+        baseurl: "http://qmstr.org/packages/"
