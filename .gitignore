@@ -9,6 +9,7 @@ demos/jsonc/jsonc
 demos/openssl/openssl
 demos/java-jabref/jabref
 demos/icecream/icecream
+demos/debian-curl/curl/
 **/qmstr
 **/reports
 **/ana.yaml
