@@ -1,5 +1,14 @@
+From 6501d2ab846920354dbec4f3f17909dc83b6fafa Mon Sep 17 00:00:00 2001
+From: Markus Herpich <markus@endocode.com>
+Date: Tue, 28 May 2019 13:48:38 +0200
+Subject: [PATCH] Apply qmstr plugin
+
+---
+ build.gradle | 4 ++++
+ 1 file changed, 4 insertions(+)
+
 diff --git a/build.gradle b/build.gradle
-index b2005e933..32e1e200f 100644
+index 3948ad18f..bf1f3a4a2 100644
 --- a/build.gradle
 +++ b/build.gradle
 @@ -12,6 +12,9 @@ buildscript {
@@ -7,17 +16,19 @@ index b2005e933..32e1e200f 100644
          }
      }
 +    dependencies {
-+         classpath "org.qmstr.gradle:qmstr-plugin:0.2"
-+     }
++        classpath "org.qmstr:gradle-plugin:0.4"
++    }
  }
  
  plugins {
-@@ -39,6 +42,8 @@ apply plugin: 'install4j'
+@@ -38,6 +41,7 @@ apply plugin: 'jacoco'
+ apply plugin: 'install4j'
  apply plugin: 'me.champeau.gradle.jmh'
  apply plugin: 'checkstyle'
- 
 +apply plugin: 'qmstr'
-+
+ 
  apply from: 'eclipse.gradle'
  apply from: 'localization.gradle'
- apply from: 'xjc.gradle'
+-- 
+2.17.1
+
