@@ -1,0 +1,45 @@
+From 5b67605ff1e1c2a18a93f127baa338480a390592 Mon Sep 17 00:00:00 2001
+From: Markus Herpich <markus@endocode.com>
+Date: Thu, 23 May 2019 10:22:42 +0200
+Subject: [PATCH] Apply qmstr plugin
+
+---
+ pom.xml | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
+
+diff --git a/pom.xml b/pom.xml
+index c098117b8..aae9042d0 100644
+--- a/pom.xml
++++ b/pom.xml
+@@ -88,6 +88,28 @@
+       </testResource>
+     </testResources>
+     <plugins>
++      <plugin>
++        <groupId>org.qmstr</groupId>
++        <artifactId>qmstr-maven-plugin</artifactId>
++        <version>0.4</version>
++        <configuration>
++            <qmstrAddress>${env.QMSTR_MASTER}</qmstrAddress>
++        </configuration>
++        <executions>
++          <execution>
++            <id>qmstrbuild</id>
++            <goals>
++              <goal>qmstrbuild</goal>
++            </goals>
++          </execution>
++          <execution>
++            <id>qmstrpackage</id>
++            <goals>
++              <goal>qmstr</goal>
++            </goals>
++          </execution>
++        </executions>
++      </plugin>
+       <plugin>
+         <artifactId>maven-javadoc-plugin</artifactId>
+         <version>${maven-javadoc-plugin.version}</version>
+-- 
+2.17.1
+
