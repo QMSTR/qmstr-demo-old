@@ -24,14 +24,12 @@ popd
 echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait --verbose)
 
-#qmstrctl create package:jabref --version $(cd jabref && git describe --tags --dirty --long)
+echo THIS IS DA ENV
+qmstrctl spawn qmstr/java-guavademo mvn -v
+echo "++++++++++"
 
 echo "[INFO] Start gradle build"
-#qmstrctl spawn qmstr/java-jabrefdemo ./gradlew qmstr
-cd guava
-mvn package -X
-
-#qmstrctl connect package:jabref file:$(find jabref -name "JabRef-?.?-dev.jar") 
+qmstrctl spawn qmstr/java-guavademo mvn -pl .,guava clean package
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f

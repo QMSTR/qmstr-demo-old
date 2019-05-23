@@ -13,23 +13,19 @@ fi
 
 source ${DEMOWD}/../../build.inc
 pushd ${DEMOWD}
-setup_git_src https://github.com/JabRef/jabref.git master jabref
+setup_git_src https://github.com/JabRef/jabref.git v4.3 jabref
 
 pushd jabref
 git clean -fxd
 echo "Applying qmstr plugin to gradle build configuration"
-patch -p1  < ${DEMOWD}/add-qmstr.patch
+git am < ${DEMOWD}/add-qmstr.patch
 popd
 
 echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait --verbose)
 
-qmstrctl create package:jabref --version $(cd jabref && git describe --tags --dirty --long)
-
 echo "[INFO] Start gradle build"
 qmstrctl spawn qmstr/java-jabrefdemo ./gradlew qmstr
-
-qmstrctl connect package:jabref file:$(find jabref -name "JabRef-?.?-dev.jar") 
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f

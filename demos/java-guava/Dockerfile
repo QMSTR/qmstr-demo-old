@@ -1,5 +1,6 @@
 FROM qmstr/javademobase
 
+ENV M2_HOME /maven
 VOLUME /buildroot
 
-WORKDIR /buildroot/jabref
+WORKDIR /buildroot/guava

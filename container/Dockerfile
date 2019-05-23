@@ -13,34 +13,33 @@ ENV PATH ${GOPATH}/bin:/usr/lib/go-1.9/bin:$PATH
 VOLUME /go/src
 
 # java base projects deps
-FROM openjdk as javabuilder
+FROM openjdk:8 as javabuilder
 
 ENV DEBIAN_FRONTEND=noninteractive
 
 RUN apt-get update && \
-    apt-get install -y git && \
+    apt-get install -y git maven && \
     rm -rf /var/lib/apt/lists/*
 
 ARG QMSTR_BRANCH=master
 ARG QMSTR_FORK=QMSTR
 RUN git clone -b ${QMSTR_BRANCH} --single-branch https://github.com/${QMSTR_FORK}/qmstr.git /tmp/qmstr
 
-RUN mkdir -p .gradle/$(grep zipStorePath /tmp/qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2)
-RUN cd .gradle/$(grep zipStorePath /tmp/qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2) && wget $(grep distributionUrl /tmp/qmstr/java/gradle/gradle/wrapper/gradle-wrapper.properties | cut -d "=" -f2 |sed -e 's#\\##')
-
-RUN cd /tmp/qmstr/java/gradle && ./gradlew test && ./gradlew install
-
-RUN rm -fr /tmp/qmstr
+WORKDIR /tmp/qmstr
+RUN cd lib/java-qmstr && ./gradlew install
+RUN cd modules/builders/qmstr-gradle-plugin && ./gradlew install
+RUN cd modules/builders/qmstr-maven-plugin && mvn install
 
 FROM demobase as javademobase
 
-RUN apt-get update && apt-get install -y openjdk-8-jdk openjfx
+RUN apt-get update && apt-get install -y openjdk-8-jdk openjfx maven
 
 RUN mkdir -p /maven/conf
 ENV M2_HOME /maven
 
-ADD settings.xml /maven/conf/settings.xml
+ADD settings.xml /usr/share/maven/conf/settings.xml
 
 COPY --from=javabuilder /root/.m2/repository /maven/repo
 
 RUN chmod -R 777 /maven/repo
+RUN ls -lR /maven/repo
