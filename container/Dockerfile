@@ -1,6 +1,6 @@
-FROM qmstr/runtime as demobase
+FROM ubuntu:19.04 as demobase
 
-RUN apt-get update && apt-get install -y ccache
+RUN apt-get update && apt-get install -y build-essential ccache apt-utils
 
 # install runtime deps
 COPY --from=qmstr/master_build /usr/local/bin/qmstr /usr/local/bin/qmstr

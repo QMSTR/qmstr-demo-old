@@ -20,3 +20,23 @@ pushd curl
 git clean -fxd
 mkdir build
 popd
+
+echo "Waiting for qmstr-master server"
+eval $(qmstrctl start --wait --verbose)
+echo "master server up and running"
+
+echo "[INFO] Create packages"
+qmstrctl create package:curl_7.64.0-3_amd64.deb --version $(cd curl && git describe --tags --dirty --long)
+qmstrctl create package:libcurl4_7.64.0-3_amd64.deb
+qmstrctl create package:libcurl3-gnutls_7.64.0-3_amd64.deb
+qmstrctl create package:libcurl3-nss_7.64.0-3_amd64.deb
+qmstrctl create package:libcurl4-openssl-dev_7.64.0-3_amd64.deb
+qmstrctl create package:libcurl4-gnutls-dev_7.64.0-3_amd64.deb
+qmstrctl create package:libcurl4-nss-dev_7.64.0-3_amd64.deb
+
+echo "[INFO] Start debian curl build"
+qmstrctl --verbose spawn qmstr/debian-curldemo qmstr run dpkg-buildpackage -B -us -uc
+
+qmstrctl snapshot -O postbuild-snapshot.tar -f
+
+echo "Build finished."
