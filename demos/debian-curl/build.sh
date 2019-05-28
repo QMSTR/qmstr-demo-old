@@ -37,6 +37,17 @@ qmstrctl create package:libcurl4-nss-dev_7.64.0-3_amd64.deb
 echo "[INFO] Start debian curl build"
 qmstrctl --verbose spawn qmstr/debian-curldemo qmstr run dpkg-buildpackage -B -us -uc
 
+echo "[INFO] Connect targets to packages"
+./targets
+
+echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f
+qmstrctl analyze --verbose
+
+echo "[INFO] Analysis finished. Creating snapshot and triggering reporting."
+qmstrctl snapshot -O postanalysis-snapshot.tar -f
+qmstrctl report --verbose
+
+qmstrctl quit
 
 echo "Build finished."
