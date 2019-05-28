@@ -14,7 +14,7 @@ fi
 source ${DEMOWD}/../../build.inc
 pushd ${DEMOWD}
 
-setup_git_src https://salsa.debian.org/debian/curl.git master curl
+setup_git_src https://salsa.debian.org/debian/curl.git debian/7.64.0-3 curl
 
 pushd curl
 git clean -fxd
