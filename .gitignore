@@ -10,6 +10,9 @@ demos/openssl/openssl
 demos/java-jabref/jabref
 demos/icecream/icecream
 demos/debian-curl/curl/
+demos/debian-curl/libcurl*
+demos/debian-curl/curl_*
+demos/debian-curl/curl-*
 **/qmstr
 **/reports
 **/ana.yaml
