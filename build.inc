@@ -5,6 +5,5 @@ function setup_git_src() {
     dir=$3
 
     git clone -b "${branch}" --single-branch "${repo_url}" "${dir}" || (cd "${dir}"; git fetch; git reset --hard "${branch}")
-    (cd "${dir}" && git clean -fxd)
+    (cd "${dir}" && git clean -ffxd)
 }
-
