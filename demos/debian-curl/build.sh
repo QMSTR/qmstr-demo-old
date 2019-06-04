@@ -16,11 +16,6 @@ pushd ${DEMOWD}
 
 setup_git_src https://salsa.debian.org/debian/curl.git debian/7.64.0-3 curl
 
-pushd curl
-git clean -fxd
-mkdir build
-popd
-
 echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait --verbose)
 echo "master server up and running"
@@ -38,7 +33,7 @@ echo "[INFO] Start debian curl build"
 qmstrctl --verbose spawn qmstr/debian-curldemo qmstr run dpkg-buildpackage -B -us -uc
 
 echo "[INFO] Connect targets to packages"
-./targets
+./targets.sh
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f
