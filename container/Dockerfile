@@ -1,6 +1,6 @@
 FROM ubuntu:19.04 as demobase
 
-RUN apt-get update && apt-get install -y build-essential ccache apt-utils
+RUN apt-get update && apt-get install -y build-essential ccache apt-utils python-dev xz-utils zlib1g libxml2-dev libxslt1-dev bzip2
 
 # install runtime deps
 COPY --from=qmstr/master_build /usr/local/bin/qmstr /usr/local/bin/qmstr
