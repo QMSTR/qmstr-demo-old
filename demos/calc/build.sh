@@ -24,7 +24,7 @@ popd
 
 qmstrctl spawn qmstr/calcdemo qmstr run make -j4
 
-qmstrctl connect package:calc file:Calculator/libcalc.a file:Calculator/calcs file:Calculator/libcalc.so file:Calculator/calc
+qmstrctl connect package:calc file:Calculator/libcalc.a file:Calculator/calcs file:Calculator/libcalc.so file:hash:$(sha1sum Calculator/calc | awk '{ print $1 }')
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f
