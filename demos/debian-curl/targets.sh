@@ -5,6 +5,14 @@ function hashthis() {
   sha1sum $1 | awk '{ print $1 }'
 }
 
+# getOldestHash() uses the path and the timestamp of a node
+# and returns the hash of the oldest node
+function getOldestHash() {
+	TIMESTAMP=`qmstrctl describe file:path:$1 | grep $1 | awk '/Timestamp/{print $NF}' | sort -n | head -1`
+    TIMESTAMP="/${TIMESTAMP}/"
+	qmstrctl describe file:path:$1 | grep $1 | awk -F'[ ,]' '$TIMESTAMP{print $9}' | head -1
+}
+
 # create curl targets
 CURL_BDIR=curl/debian/curl/usr/
 qmstrctl create file:${CURL_BDIR}share/doc/curl/NEWS.Debian.gz
@@ -24,6 +32,10 @@ qmstrctl connect package:curl_7.64.0-3_amd64.deb \
 	file:${CURL_BDIR}share/man/man1/curl.1.gz \
 	file:${CURL_BDIR}share/zsh/vendor-completions/_curl
 
+# connect missing dependencies
+qmstrctl connect file:hash:$(getOldestHash ${CURL_BDIR}bin/curl) \
+	file:path:curl/debian/build/src/.libs/curl
+
 # create libcurl4 targets
 LIBCURL_BDIR=curl/debian/libcurl4/usr/
 qmstrctl create file:${LIBCURL_BDIR}share/doc/libcurl4/NEWS.Debian.gz
@@ -38,6 +50,10 @@ qmstrctl connect package:libcurl4_7.64.0-3_amd64.deb \
 	file:${LIBCURL_BDIR}share/doc/libcurl4/changelog.Debian.gz \
 	file:${LIBCURL_BDIR}share/doc/libcurl4/changelog.gz \
 	file:${LIBCURL_BDIR}share/doc/libcurl4/copyright
+
+# connect missing dependencies
+qmstrctl connect file:hash:$(getOldestHash ${LIBCURL_BDIR}lib/x86_64-linux-gnu/libcurl.so.4.5.0) \
+    file:path:curl/debian/build/lib/.libs/libcurl.so
 
 # create libcurl3-gnutls targets
 GNU_BDIR=curl/debian/libcurl3-gnutls/usr/
@@ -58,6 +74,10 @@ qmstrctl connect package:libcurl3-gnutls_7.64.0-3_amd64.deb \
 	file:${GNU_DOC}copyright \
 	file:${GNU_BDIR}share/lintian/overrides/libcurl3-gnutls
 
+# connect missing dependencies
+qmstrctl connect file:hash:$(getOldestHash ${GNU_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.so.4.5.0) \
+    file:path:curl/debian/build-gnutls/lib/.libs/libcurl-gnutls.so
+
 # create libcurl3-nss targets
 NSS_DIR=curl/debian/libcurl3-nss/usr/
 qmstrctl create file:${NSS_DIR}share/lintian/overrides/libcurl3-nss
@@ -76,6 +96,10 @@ qmstrctl connect package:libcurl3-nss_7.64.0-3_amd64.deb \
 	file:${NSS_DOC}changelog.gz \
 	file:${NSS_DOC}copyright \
 	file:${NSS_DIR}share/lintian/overrides/libcurl3-nss
+
+# connect missing dependencies
+qmstrctl connect file:hash:$(getOldestHash ${NSS_DIR}lib/x86_64-linux-gnu/libcurl-nss.so.4.5.0) \
+    file:path:curl/debian/build-nss/lib/.libs/libcurl-nss.so
 
 # create libcurl4-openssl-dev targets
 OPENSSL_BDIR=curl/debian/libcurl4-openssl-dev/usr/
