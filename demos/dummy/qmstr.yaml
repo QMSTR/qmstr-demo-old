@@ -4,10 +4,6 @@ project:
     Vendor: "Endocode"
     OcFossLiaison: "Mirko Boehm"
     OcComplianceContact: "foss@endocode.com"
-  server:
-    rpcaddress: ":50051"
-    dbaddress: "localhost:9080"
-    dbworkers: 4
   analysis:
   reporting:
     - reporter: qmstr-reporter-html
