@@ -36,3 +36,4 @@ project:
       name: "Package manifest Reporter"
       config:
         outputdir: "/buildroot"
+        pathSubst: ".+?/.+?/.+?/(.+)||./$1"
