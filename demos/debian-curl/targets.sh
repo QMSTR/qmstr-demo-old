@@ -25,7 +25,7 @@ qmstrctl create file:${CURL_BDIR}share/doc/curl/NEWS.Debian.gz --name NEWS.Debia
 qmstrctl create file:${CURL_BDIR}share/doc/curl/changelog.gz --name changelog.gz
 qmstrctl create file:${CURL_BDIR}share/doc/curl/copyright --name copyright
 qmstrctl create file:${CURL_BDIR}share/doc/curl/changelog.Debian.gz --name changelog.Debian.gz
-qmstrctl create file:${CURL_BDIR}share/man/man1/curl.1.gz --name curl.1.gz
+qmstrctl create file:${CURL_BDIR}share/man/man1/curl.1.gz --name curl.1.gz			### The name is ovewritten to curl-config.1.gz
 qmstrctl create file:${CURL_BDIR}share/zsh/vendor-completions/_curl --name _curl
 
 # connect targets to curl package
@@ -55,12 +55,9 @@ qmstrctl create file:${LIBCURL_BDIR}share/doc/libcurl4/changelog.Debian.gz --nam
 qmstrctl create file:${LIBCURL_BDIR}share/doc/libcurl4/changelog.gz --name changelog.gz
 qmstrctl create file:${LIBCURL_BDIR}share/doc/libcurl4/copyright --name copyright
 
-qmstrctl create file:${LIBCURL_BDIR}lib/x86_64-linux-gnu/libcurl.so.4 --name libcurl.so.4
-
 # connect targets to libcurl4 package
 qmstrctl connect package:libcurl4_7.64.0-3_amd64.deb \
 	file:hash:$(hashthis ${LIBCURL_BDIR}lib/x86_64-linux-gnu/libcurl.so.4.5.0) \
-	file:${LIBCURL_BDIR}lib/x86_64-linux-gnu/libcurl.so.4 \
 	file:${LIBCURL_BDIR}share/doc/libcurl4/NEWS.Debian.gz \
 	file:${LIBCURL_BDIR}share/doc/libcurl4/changelog.Debian.gz \
 	file:${LIBCURL_BDIR}share/doc/libcurl4/changelog.gz \
@@ -86,12 +83,10 @@ qmstrctl create file:${GNU_DOC}changelog.Debian.gz --name changelog.Debian.gz
 qmstrctl create file:${GNU_DOC}changelog.gz --name changelog.gz
 qmstrctl create file:${GNU_DOC}copyright --name copyright
 
-qmstrctl create file:${GNU_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.so.3 --name libcurl-gnutls.so.3
 
 # connect targets to libcurl3-gnutls package
 qmstrctl connect package:libcurl3-gnutls_7.64.0-3_amd64.deb \
 	file:hash:$(hashthis ${GNU_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.so.4.5.0) \
-	file:${GNU_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.so.3 \
 	file:${GNU_DOC}NEWS.Debian.gz \
 	file:${GNU_DOC}changelog.Debian.gz \
 	file:${GNU_DOC}changelog.gz \
@@ -118,14 +113,9 @@ qmstrctl create file:${NSS_DOC}changelog.Debian.gz --name changelog.Debian.gz
 qmstrctl create file:${NSS_DOC}changelog.gz --name changelog.gz
 qmstrctl create file:${NSS_DOC}copyright --name copyright
 
-qmstrctl create file:${NSS_DIR}lib/x86_64-linux-gnu/libcurl-nss.so.3 --name libcurl-nss.so.3
-qmstrctl create file:${NSS_DIR}lib/x86_64-linux-gnu/libcurl-nss.so.4 --name libcurl-nss.so.4
-
 # connect targets to libcurl3-nss package
 qmstrctl connect package:libcurl3-nss_7.64.0-3_amd64.deb \
 	file:hash:$(hashthis ${NSS_DIR}lib/x86_64-linux-gnu/libcurl-nss.so.4.5.0) \
-	file:${NSS_DIR}lib/x86_64-linux-gnu/libcurl-nss.so.3 \
-	file:${NSS_DIR}lib/x86_64-linux-gnu/libcurl-nss.so.4 \
 	file:${NSS_DOC}NEWS.Debian.gz \
 	file:${NSS_DOC}changelog.Debian.gz \
 	file:${NSS_DOC}changelog.gz \
@@ -169,7 +159,6 @@ qmstrctl create file:${OPENSSL_DOC}changelog.Debian.gz --name changelog.Debian.g
 qmstrctl create file:${OPENSSL_DOC}changelog.gz --name changelog.gz
 qmstrctl create file:${OPENSSL_DOC}copyright --name copyright
 
-
 # connect targets to libcurl4-openssl-dev package
 qmstrctl connect package:libcurl4-openssl-dev_7.64.0-3_amd64.deb \
 	file:${OPENSSL_DOC}NEWS.Debian.gz \
@@ -181,7 +170,6 @@ qmstrctl connect package:libcurl4-openssl-dev_7.64.0-3_amd64.deb \
 qmstrctl connect package:libcurl4-openssl-dev_7.64.0-3_amd64.deb \
 	file:hash:$(hashthis ${OPENSSL_BDIR}lib/x86_64-linux-gnu/libcurl.a) \
 	file:${OPENSSL_BDIR}lib/x86_64-linux-gnu/libcurl.la \
-	file:${OPENSSL_BDIR}lib/x86_64-linux-gnu/libcurl.so \
 	file:${OPENSSL_BDIR}lib/x86_64-linux-gnu/pkgconfig/libcurl.pc \
 	file:${OPENSSL_BDIR}bin/curl-config \
 	file:${OPENSSL_BDIR}share/man/man1/curl-config.1.gz
@@ -246,10 +234,6 @@ qmstrctl connect package:libcurl4-gnutls-dev_7.64.0-3_amd64.deb \
 qmstrctl connect package:libcurl4-gnutls-dev_7.64.0-3_amd64.deb \
 	file:hash:$(hashthis ${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.a) \
 	file:${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.la \
-	file:${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.so \
-	file:hash:$(hashthis ${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/libcurl.a) \
-	file:hash:${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/libcurl.la \
-	file:hash:${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/libcurl.so \
 	file:${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/pkgconfig/libcurl.pc
 
 qmstrctl connect package:libcurl4-gnutls-dev_7.64.0-3_amd64.deb \
@@ -277,7 +261,6 @@ qmstrctl create file:${H_FILES}urlapi.h --name urlapi.h
 
 LIB_NSS_DEV=${NSS_DEV_DIR}lib/x86_64-linux-gnu/
 qmstrctl create file:${LIB_NSS_DEV}libcurl-nss.la --name libcurl-nss.la
-qmstrctl create file:${LIB_NSS_DEV}libcurl-nss.so --name libcurl-nss.so
 qmstrctl create file:${LIB_NSS_DEV}pkgconfig/libcurl.pc --name libcurl.pc
 
 qmstrctl create file:${NSS_DEV_DIR}share/aclocal/libcurl.m4 --name libcurl.m4
@@ -312,14 +295,7 @@ qmstrctl connect package:libcurl4-nss-dev_7.64.0-3_amd64.deb \
 qmstrctl connect package:libcurl4-nss-dev_7.64.0-3_amd64.deb \
 	file:hash:$(hashthis ${LIB_NSS_DEV}libcurl-nss.a) \
 	file:${LIB_NSS_DEV}libcurl-nss.la \
-	file:${LIB_NSS_DEV}libcurl-nss.so \
-	file:hash:$(hashthis ${LIB_NSS_DEV}libcurl.a) \
-	file:${OPENSSL_BDIR}lib/x86_64-linux-gnu/libcurl.la \
-	file:path:curl/debian/build/lib/.libs/libcurl.so \
 	file:${LIB_NSS_DEV}pkgconfig/libcurl.pc
-
-qmstrctl connect file:${LIB_NSS_DEV}libcurl-nss.so \
-	file:hash:curl/debian/build-nss/lib/.libs/libcurl-nss.so.4.5.0
 
 qmstrctl connect package:libcurl4-nss-dev_7.64.0-3_amd64.deb \
 	file:${NSS_DEV_DIR}share/aclocal/libcurl.m4 \
