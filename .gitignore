@@ -13,6 +13,7 @@ demos/debian-curl/curl/
 demos/debian-curl/libcurl*
 demos/debian-curl/curl_*
 demos/debian-curl/curl-*
+demos/python-flask/flask
 **/qmstr
 **/reports
 **/ana.yaml

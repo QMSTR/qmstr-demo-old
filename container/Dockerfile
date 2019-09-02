@@ -43,3 +43,19 @@ COPY --from=javabuilder /root/.m2/repository /maven/repo
 
 RUN chmod -R 777 /maven/repo
 RUN ls -lR /maven/repo
+
+# python base project deps
+FROM demobase as pythondemobase
+
+RUN apt-get install -y git python3 \
+    python3-dev python3-pip3
+
+ARG QMSTR_BRANCH=master
+ARG QMSTR_FORK=QMSTR
+ARG QMSTR_VERSION=0.4
+
+RUN git clone -b ${QMSTR_BRANCH} --single-branch https://github.com/${QMSTR_FORK}/qmstr.git /tmp/qmstr
+
+WORKDIR /tmp/qmstr
+RUN cd lib/pyqmstr && pip3 install .
+RUN cd modules/builders/qmstr-py-builder && pip3 install .
