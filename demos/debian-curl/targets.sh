@@ -10,7 +10,7 @@ function hashthis() {
 function getOldestHash() {
 	TIMESTAMP=`qmstrctl describe file:path:$1 | grep $1 | awk '/Timestamp/{print $NF}' | sort -n | head -1`
     TIMESTAMP="/${TIMESTAMP}/"
-	qmstrctl describe file:path:$1 | grep $1 | awk -F'[ ,]' '$TIMESTAMP{print $9}' | head -1
+	qmstrctl describe file:path:$1 | grep $1 | awk -F'[ ,]' ''$TIMESTAMP'{print $9}' | head -1
 }
 
 # create curl targets
@@ -57,6 +57,9 @@ qmstrctl connect package:libcurl4_7.64.0-3_amd64.deb \
 qmstrctl connect file:hash:$(getOldestHash ${LIBCURL_BDIR}lib/x86_64-linux-gnu/libcurl.so.4.5.0) \
     file:path:curl/debian/build/lib/.libs/libcurl.so
 
+qmstrctl connect file:path:curl/debian/build/lib/.libs/libcurl.so \
+	file:path:curl/debian/build/lib/.libs/libcurl.so.4.5.0
+
 # create libcurl3-gnutls targets
 GNU_BDIR=curl/debian/libcurl3-gnutls/usr/
 qmstrctl create file:${GNU_BDIR}share/lintian/overrides/libcurl3-gnutls --name libcurl3-gnutls
@@ -82,6 +85,9 @@ qmstrctl connect package:libcurl3-gnutls_7.64.0-3_amd64.deb \
 qmstrctl connect file:hash:$(getOldestHash ${GNU_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.so.4.5.0) \
     file:path:curl/debian/build-gnutls/lib/.libs/libcurl-gnutls.so
 
+qmstrctl connect file:path:curl/debian/build-gnutls/lib/.libs/libcurl-gnutls.so \
+	file:path:curl/debian/build-gnutls/lib/.libs/libcurl-gnutls.so.4.5.0
+
 # create libcurl3-nss targets
 NSS_DIR=curl/debian/libcurl3-nss/usr/
 qmstrctl create file:${NSS_DIR}share/lintian/overrides/libcurl3-nss --name libcurl3-nss
@@ -105,6 +111,9 @@ qmstrctl connect package:libcurl3-nss_7.64.0-3_amd64.deb \
 # connect missing dependencies
 qmstrctl connect file:hash:$(getOldestHash ${NSS_DIR}lib/x86_64-linux-gnu/libcurl-nss.so.4.5.0) \
     file:path:curl/debian/build-nss/lib/.libs/libcurl-nss.so
+
+qmstrctl connect file:path:curl/debian/build-nss/lib/.libs/libcurl-nss.so \
+	file:path:curl/debian/build-nss/lib/.libs/libcurl-nss.so.4.5.0
 
 # create libcurl4-openssl-dev targets
 OPENSSL_BDIR=curl/debian/libcurl4-openssl-dev/usr/
@@ -148,6 +157,11 @@ qmstrctl connect package:libcurl4-openssl-dev_7.64.0-3_amd64.deb \
 	file:${OPENSSL_BDIR}lib/x86_64-linux-gnu/pkgconfig/libcurl.pc \
 	file:${OPENSSL_BDIR}bin/curl-config \
 	file:${OPENSSL_BDIR}share/man/man1/curl-config.1.gz
+
+# connect missing dependencies
+# TODO: connect to the oldestHash + path, when fultering with multiple functions is available
+qmstrctl connect file:hash:$(hashthis ${OPENSSL_BDIR}lib/x86_64-linux-gnu/libcurl.a) \
+	file:path:curl/debian/build/lib/.libs/libcurl.a
 
 qmstrctl connect package:libcurl4-openssl-dev_7.64.0-3_amd64.deb \
 	file:${H_FILES}curl.h \
@@ -214,6 +228,11 @@ qmstrctl connect package:libcurl4-gnutls-dev_7.64.0-3_amd64.deb \
 	file:${GNUTLS_DOC}copyright \
 	file:${GNUTLS_DEV_BDIR}share/man/man1/curl-config.1.gz
 
+# connect missing dependencies
+# TODO: connect to the oldestHash + path, when fultering with multiple functions is available
+qmstrctl connect file:hash:$(hashthis ${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.a) \
+	file:path:curl/debian/build-gnutls/lib/.libs/libcurl-gnutls.a
+
 # create libcurl4-nss-dev targets
 NSS_DEV_DIR=curl/debian/libcurl4-nss-dev/usr/
 qmstrctl create file:${NSS_DEV_DIR}bin/curl-config --name curl-config
@@ -269,3 +288,8 @@ qmstrctl connect package:libcurl4-nss-dev_7.64.0-3_amd64.deb \
 	file:${NSS_DEV_DOC}changelog.gz \
 	file:${NSS_DEV_DOC}copyright \
 	file:${NSS_DEV_DIR}share/man/man1/curl-config.1.gz
+
+# connect missing dependencies
+# TODO: connect to the oldestHash + path, when fultering with multiple functions is available
+qmstrctl connect file:hash:$(hashthis ${LIB_NSS_DEV}libcurl-nss.a) \
+	file:path:curl/debian/build-nss/lib/.libs/libcurl-nss.a
