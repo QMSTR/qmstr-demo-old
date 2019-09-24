@@ -8,9 +8,12 @@ function hashthis() {
 # getOldestHash() uses the path and the timestamp of a node
 # and returns the hash of the oldest node
 function getOldestHash() {
-	TIMESTAMP=`qmstrctl describe file:path:$1 | grep $1 | awk '/Timestamp/{print $NF}' | sort -n | head -1`
+	TIMESTAMP=`qmstrctl describe file:path:$1 | grep $1 | awk -F'[ ,]' '/Timestamp/{print $12}' | sort -n | head -1`
     TIMESTAMP="/${TIMESTAMP}/"
 	qmstrctl describe file:path:$1 | grep $1 | awk -F'[ ,]' ''$TIMESTAMP'{print $9}' | head -1
+}
+function getUid() {
+	qmstrctl describe file:hash:$1 | grep $2 | awk '/Uid/{print $NF}'
 }
 
 # create curl targets
@@ -159,8 +162,7 @@ qmstrctl connect package:libcurl4-openssl-dev_7.64.0-3_amd64.deb \
 	file:${OPENSSL_BDIR}share/man/man1/curl-config.1.gz
 
 # connect missing dependencies
-# TODO: connect to the oldestHash + path, when fultering with multiple functions is available
-qmstrctl connect file:hash:$(hashthis ${OPENSSL_BDIR}lib/x86_64-linux-gnu/libcurl.a) \
+qmstrctl connect file:uid:$(getUid $(getOldestHash ${OPENSSL_BDIR}lib/x86_64-linux-gnu/libcurl.a) ${OPENSSL_BDIR}lib/x86_64-linux-gnu/libcurl.a) \
 	file:path:curl/debian/build/lib/.libs/libcurl.a
 
 qmstrctl connect package:libcurl4-openssl-dev_7.64.0-3_amd64.deb \
@@ -229,8 +231,7 @@ qmstrctl connect package:libcurl4-gnutls-dev_7.64.0-3_amd64.deb \
 	file:${GNUTLS_DEV_BDIR}share/man/man1/curl-config.1.gz
 
 # connect missing dependencies
-# TODO: connect to the oldestHash + path, when fultering with multiple functions is available
-qmstrctl connect file:hash:$(hashthis ${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.a) \
+qmstrctl connect file:uid:$(getUid $(getOldestHash ${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.a) ${GNUTLS_DEV_BDIR}lib/x86_64-linux-gnu/libcurl-gnutls.a) \
 	file:path:curl/debian/build-gnutls/lib/.libs/libcurl-gnutls.a
 
 # create libcurl4-nss-dev targets
@@ -290,6 +291,5 @@ qmstrctl connect package:libcurl4-nss-dev_7.64.0-3_amd64.deb \
 	file:${NSS_DEV_DIR}share/man/man1/curl-config.1.gz
 
 # connect missing dependencies
-# TODO: connect to the oldestHash + path, when fultering with multiple functions is available
-qmstrctl connect file:hash:$(hashthis ${LIB_NSS_DEV}libcurl-nss.a) \
+qmstrctl connect file:uid:$(getUid $(getOldestHash ${LIB_NSS_DEV}libcurl-nss.a) ${LIB_NSS_DEV}libcurl-nss.a) \
 	file:path:curl/debian/build-nss/lib/.libs/libcurl-nss.a
