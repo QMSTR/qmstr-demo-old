@@ -19,3 +19,4 @@ demos/python-pillow/Pillow
 **/reports
 **/ana.yaml
 *.DS_Store
+container/Full*.Dockerfile
