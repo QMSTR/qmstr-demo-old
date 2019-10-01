@@ -18,13 +18,16 @@ demobase: container/Dockerfile
 	@echo "Building demo image"
 	cd container && docker build -t qmstr/demo --target demobase ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) .
 
-javademobase: container/Dockerfile
-	@echo "Building java demo image"
-	cd container && docker build -t qmstr/javademobase --target javademobase ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) .
+container/Full%.Dockerfile: container/Dockerfile container/%.Dockerfile
+	cat $^ > $@
 
-pythondemobase: container/Dockerfile
+javademobase: container/FullJava.Dockerfile
 	@echo "Building java demo image"
-	cd container && docker build -t qmstr/javademobase --target javademobase ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) .
+	docker build -f $^ -t qmstr/javademobase --target javademobase ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) container
+
+pythondemobase: container/FullPython.Dockerfile
+	@echo "Building python demo image"
+	docker build -f $^ -t qmstr/pythondemobase --target pythondemobase ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) container 
 
 $(DEMO_IMAGES): demobase
 	@echo "Building image $@"
