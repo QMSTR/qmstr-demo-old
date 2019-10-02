@@ -29,17 +29,15 @@ echo "master server up and running"
 echo "[INFO] Start pillow build"
 qmstrctl --verbose spawn qmstr/python-pillowdemo qmstr run ${PY_CMD}
 
-# qmstrctl connect package:pillow file:pillow/...
+echo "[INFO] Build finished. Creating snapshot and triggering analysis."
+qmstrctl snapshot -O postbuild-snapshot.tar -f
+qmstrctl analyze --verbose
 
-# echo "[INFO] Build finished. Creating snapshot and triggering analysis."
-# qmstrctl snapshot -O postbuild-snapshot.tar -f
-# qmstrctl analyze --verbose
+echo "[INFO] Analysis finished. Creating snapshot and triggering reporting."
+qmstrctl snapshot -O postanalysis-snapshot.tar -f
+qmstrctl report --verbose
 
-# echo "[INFO] Analysis finished. Creating snapshot and triggering reporting."
-# qmstrctl snapshot -O postanalysis-snapshot.tar -f
-# qmstrctl report --verbose
-
-# qmstrctl quit
+qmstrctl quit
 
 echo "Build finished."
 
