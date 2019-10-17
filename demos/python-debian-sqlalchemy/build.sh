@@ -33,6 +33,10 @@ qmstrctl create package:python3-sqlalchemy-ext_1.3.5+ds1-2_amd64.deb --version $
 echo "[INFO] Start sqlalchemy build"
 qmstrctl --verbose spawn qmstr/python-debian-sqlalchemydemo qmstr run dpkg-buildpackage -B -us -uc
 
+echo "[INFO] Connecting targets to packages"
+./targets.sh
+echo "[INFO] Done"
+
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f
 qmstrctl analyze --verbose
