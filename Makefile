@@ -27,7 +27,7 @@ javademobase: container/FullJava.Dockerfile
 
 pythondemobase: container/FullPython.Dockerfile
 	@echo "Building python demo image"
-	docker build -f $^ -t qmstr/pythondemobase --target pythondemobase ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) container 
+	docker build -f $^ -t qmstr/pythondemobase --target pythondemobase ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) container
 
 $(DEMO_IMAGES): demobase
 	@echo "Building image $@"
@@ -42,8 +42,13 @@ $(PYTHONDEMO_IMAGES): pythondemobase
 	cd demos/$(@:%demo=%) && docker build -t $(IMAGE_PREFIX)/$@ ${DOCKER_PROXY} $(EXTRA_BUILD_OPTS) .
 
 demos/%: %demo
-	@echo "running $@ demo"
-	$@/build.sh
+	@echo "running $(^:%demo=%) demo"
+	cat demos/startmaster.sh $@/build.sh demos/analyze-report-quit.sh > $@/fullbuild.sh
+	sed -i -e 's#Running#Running $(^:%demo=%)#' $@/fullbuild.sh
+	cat $@/fullbuild.sh
+	chmod +x $@/fullbuild.sh
+	$@/fullbuild.sh
+	rm -rf $@/fullbuild.sh
 
 $(DEMOS): %: demos/%
 
