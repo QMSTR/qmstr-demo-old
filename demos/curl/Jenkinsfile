@@ -1,0 +1,114 @@
+#!groovy
+node {
+    def qmstrbin = "${env.WORKSPACE}/bin"
+    def qmstraddress = ""
+    def qmstrcachedir = "$HOME/workspace/QMSTR/qmstrcache"
+
+    try{
+
+        parameters {
+            string(name: 'curlbranch', defaultValue: 'master', description: 'Branch of curl repo to build')
+            string(name: 'qmstrbranch', defaultValue: 'master', description: 'Branch of qmstr repo to build')
+            string(name: 'qmstrrepo', defaultValue: 'QMSTR', description: 'Repo to use QMSTR or endocode')
+        }
+
+        stage('clean')
+        {
+            cleanWs(deleteDirs: true,
+                patterns: [
+                    [pattern: 'qmstrcache', type: 'EXCLUDE'],
+                    [pattern: 'qmstrcache/**', type: 'EXCLUDE'],
+                    [pattern: '.git', type: 'EXCLUDE'],
+                    [pattern: '.git/**', type: 'EXCLUDE']
+            ])
+            sh "ls -laR"
+        }
+        stage('Clone sources') {
+            dir('qmstr-master') {
+                checkout([$class: 'GitSCM',
+                    doGenerateSubmoduleConfigurations: false,
+                    extensions: [],
+                    submoduleCfg: [],
+                    branches: [[name: "${params.qmstrbranch}"]],
+                    userRemoteConfigs: [[url: "https://github.com/${params.qmstrrepo}/qmstr.git"]]])
+            }
+            dir("demos/curl/curl"){
+                checkout([$class: 'GitSCM',
+                    branches: [[name: "${params.curlbranch}"]],
+                    userRemoteConfigs: [[url: 'https://github.com/curl/curl']]
+                ])
+                sh "git clean -fxd"
+                sh "mkdir build"
+            }
+        }
+        stage('Compile qmstr') {
+            dir("qmstr-master"){
+                sh 'make democontainer'
+                sh "mkdir ${qmstrbin}"
+                sh "mkdir ${qmstrcachedir} || true"
+                def mastername = sh(script: 'docker create qmstr/master', returnStdout: true)
+                mastername = mastername.trim()
+                sh "docker cp ${mastername}:/usr/local/bin/qmstr ${qmstrbin}/"
+                sh "docker cp ${mastername}:/usr/local/bin/qmstrctl ${qmstrbin}/"
+                sh "docker rm ${mastername}"
+            }
+        }
+        stage('Build curl builder image') {
+            sh 'make curldemo'
+        }
+        stage('Start qmstr-master server') {
+            dir("demos/curl") {
+                sh "sed -i -e 's#analysis:#server:\\n    cachedir: \"${qmstrcachedir}\"\\n analysis:#' qmstr.yaml"
+                sh "sed -i -e 's#localhost:8080#qmstr.org/packages#' qmstr.yaml"
+                sh "sed -i -e '/generatehtml/s/# *//' qmstr.yaml"
+                sh "cat qmstr.yaml"
+                qmstraddress = sh(script: "${qmstrbin}/qmstrctl start --verbose --wait |cut -d \"=\" -f 2", returnStdout: true)
+                qmstraddress = qmstraddress.trim()
+            }
+        }
+        stage('Build cURL with qmstr') {
+            dir("demos/curl"){
+                withEnv(["PATH=${qmstrbin}:${env.PATH}", "QMSTR_MASTER=${qmstraddress}"]) {
+                    sh "build.sh"
+                }
+            }
+        }
+        stage('Analysis') {
+            withEnv(["PATH=${qmstrbin}:${env.PATH}", "QMSTR_MASTER=${qmstraddress}"]) {
+                    sh "qmstrctl analyze --verbose"
+            }
+        }
+        stage('Reporting') {
+            withEnv(["PATH=${qmstrbin}:${env.PATH}", "QMSTR_MASTER=${qmstraddress}"]) {
+                    sh "qmstrctl report --verbose"
+            }
+        }
+        stage('Shutdown qmstr-master') {
+            withEnv(["PATH=${qmstrbin}:${env.PATH}", "QMSTR_MASTER=${qmstraddress}"]) {
+                sh "qmstrctl quit"
+            }
+        }
+        stage('Generate hugo website') {
+            build job: '/QMSTR/hugo-website-generation', parameters: [[$class: 'StringParameterValue', name: 'qmstrbranch', value: params.qmstrbranch], [$class: 'StringParameterValue', name: 'qmstrrepo', value: params.qmstrrepo], [$class: 'StringParameterValue', name: 'qmstrdemobranch', value: params.qmstrdemobranch], [$class: 'StringParameterValue', name: 'qmstrdemorepo', value: params.qmstrdemorepo]], propagate: false
+        }
+    }
+    catch (Exception e)
+    {
+        currentBuild.result = 'FAILURE'
+
+        if (fileExists(qmstrbin + 'qmstrctl')) {
+            withEnv(["PATH=${qmstrbin}:${env.PATH}", "QMSTR_MASTER=${qmstraddress}"]) {
+                sh "qmstrctl logs"
+                sh "qmstrctl quit"
+            }
+        }
+    }
+    finally {
+        if (currentBuild.result == 'SUCCESS' && currentBuild.getPreviousBuild().result != 'SUCCESS') {
+            googlechatnotification message: "Job ${env.JOB_NAME} ${env.BUILD_NUMBER} successfully finished. See ${env.BUILD_URL}", url: "id:qmstr_hangout_chat_webhook"
+        }
+        if (currentBuild.result == 'FAILURE') {
+            googlechatnotification message: "Job ${env.JOB_NAME} ${env.BUILD_NUMBER} failed. See ${env.BUILD_URL}", url: "id:qmstr_hangout_chat_webhook"
+        }
+    }
+}
