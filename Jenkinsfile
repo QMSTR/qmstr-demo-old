@@ -18,12 +18,7 @@ pipeline {
                     agent { label 'docker' }
 
                     steps {
-                        copyArtifacts('QMSTR/qmstr/development') {
-                            targetDirectory('$WORKSPACE/out/')
-                            buildSelector {
-                                latestSuccessful(true)
-                            }
-                        }
+                        copyArtifacts(projectName: 'QMSTR/qmstr/development')
                         sh 'make container'
                         sh 'git submodule update --init'
                         sh "cd demos && make curl"
@@ -40,12 +35,7 @@ pipeline {
                     }
 
                     steps {
-                        copyArtifacts('QMSTR/qmstr/development') {
-                            targetDirectory('$WORKSPACE/out/')
-                            buildSelector {
-                                latestSuccessful(true)
-                            }
-                        }
+                        copyArtifacts(projectName: 'QMSTR/qmstr/development')
                         sh 'make container'
                         sh 'git submodule update --init'
                         sh "cd demos && make openssl"
