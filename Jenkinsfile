@@ -19,9 +19,7 @@ pipeline {
 
                     steps {
                         copyArtifacts(projectName: 'QMSTR/qmstr/development')
-                        sh 'make container'
-                        sh 'git submodule update --init'
-                        sh "cd demos && make curl"
+                        sh "make curl"
                        
                     }
                 }
@@ -36,9 +34,7 @@ pipeline {
 
                     steps {
                         copyArtifacts(projectName: 'QMSTR/qmstr/development')
-                        sh 'make container'
-                        sh 'git submodule update --init'
-                        sh "cd demos && make openssl"
+                        sh "make openssl"
                     }
                 }
             }
