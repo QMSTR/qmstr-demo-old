@@ -4,19 +4,6 @@ pipeline {
 
     stages {
 
-        // temporary, in the future we should not build the application here
-        stage('Build QMSTR') {
-            agent {
-                docker { image 'endocode/qmstr_buildenv:latest' }
-            }
-            steps {
-                sh "make clients"
-                stash includes: 'out/qmstr*', name: 'executables' 
-                archiveArtifacts artifacts: 'out/*', fingerprint: true
-            }
-            
-        }
-
         // as soon as the master branch of qmstr is built by the CI and creates artifacts,
         // these binaries should be imported to the following jobs
         stage('Compile with QMSTR'){
@@ -31,7 +18,12 @@ pipeline {
                     agent { label 'docker' }
 
                     steps {
-                        unstash 'executables'
+                        copyArtifacts(projectName: 'QMSTR/qmstr/development') {
+                            targetDirectory('$WORKSPACE/out/')
+                            buildSelector {
+                                latestSuccessful(true)
+                            }
+                        }
                         sh 'make container'
                         sh 'git submodule update --init'
                         sh "cd demos && make curl"
@@ -48,7 +40,12 @@ pipeline {
                     }
 
                     steps {
-                        unstash 'executables'
+                        copyArtifacts(projectName: 'QMSTR/qmstr/development') {
+                            targetDirectory('$WORKSPACE/out/')
+                            buildSelector {
+                                latestSuccessful(true)
+                            }
+                        }
                         sh 'make container'
                         sh 'git submodule update --init'
                         sh "cd demos && make openssl"
