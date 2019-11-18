@@ -18,7 +18,7 @@ pipeline {
                     agent { label 'docker' }
 
                     steps {
-                        copyArtifacts(projectName: 'QMSTR/qmstr/development') {
+                        copyArtifacts('QMSTR/qmstr/development') {
                             targetDirectory('$WORKSPACE/out/')
                             buildSelector {
                                 latestSuccessful(true)
@@ -40,7 +40,7 @@ pipeline {
                     }
 
                     steps {
-                        copyArtifacts(projectName: 'QMSTR/qmstr/development') {
+                        copyArtifacts('QMSTR/qmstr/development') {
                             targetDirectory('$WORKSPACE/out/')
                             buildSelector {
                                 latestSuccessful(true)
