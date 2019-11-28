@@ -18,7 +18,7 @@ index c098117b8..aae9042d0 100644
 +      <plugin>
 +        <groupId>org.qmstr</groupId>
 +        <artifactId>qmstr-maven-plugin</artifactId>
-+        <version>0.4</version>
++        <version>0.5</version>
 +        <configuration>
 +            <qmstrAddress>${env.QMSTR_MASTER}</qmstrAddress>
 +        </configuration>
