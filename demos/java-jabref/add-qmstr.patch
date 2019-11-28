@@ -16,7 +16,7 @@ index 3948ad18f..bf1f3a4a2 100644
          }
      }
 +    dependencies {
-+        classpath "org.qmstr:gradle-plugin:0.4"
++        classpath "org.qmstr:gradle-plugin:0.5"
 +    }
  }
  
