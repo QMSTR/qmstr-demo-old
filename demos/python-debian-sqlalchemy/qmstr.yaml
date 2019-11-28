@@ -16,7 +16,7 @@ project:
       config:
         workdir: "/buildroot"
         resultfile: "/buildroot/scancode.json"
-        cached: "true"
+        #cached: "true"
     - analyzer: test-analyzer
       name: "Simple CI Test Analyzer"
       config:
