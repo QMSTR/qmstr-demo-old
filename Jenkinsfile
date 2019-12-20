@@ -37,6 +37,20 @@ pipeline {
                         sh "make openssl"
                     }
                 }
+
+                stage('compile flask'){
+
+                    agent { label 'docker' }
+
+                    environment {
+                        PATH = "$PATH:$WORKSPACE/out/"
+                    }
+
+                    steps {
+                        copyArtifacts(projectName: 'QMSTR/qmstr/development')
+                        sh "make flask"
+                    }
+                }
             }
         }
         // stage('Publish report') {
