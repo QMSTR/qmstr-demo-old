@@ -32,7 +32,7 @@ echo "[INFO] Start gradle build"
 qmstrctl spawn qmstr/java-guavademo mvn -pl .,guava clean package
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
-qmstrctl wait -t 120
+qmstrctl wait -t 200
 qmstrctl snapshot -O postbuild-snapshot.tar -f
 qmstrctl analyze --verbose
 
