@@ -18,9 +18,8 @@ pipeline {
                     agent { label 'docker' }
 
                     steps {
-                        copyArtifacts(projectName: 'QMSTR/qmstr/development')
+                        copyArtifacts(projectName: 'QMSTR/qmstr/master')
                         sh "make curl"
-                       
                     }
                 }
 
@@ -33,7 +32,7 @@ pipeline {
                     }
 
                     steps {
-                        copyArtifacts(projectName: 'QMSTR/qmstr/development')
+                        copyArtifacts(projectName: 'QMSTR/qmstr/master')
                         sh "make openssl"
                     }
                 }
@@ -47,7 +46,7 @@ pipeline {
                     }
 
                     steps {
-                        copyArtifacts(projectName: 'QMSTR/qmstr/development')
+                        copyArtifacts(projectName: 'QMSTR/qmstr/master')
                         sh "make flask"
                     }
                 }

@@ -13,6 +13,7 @@ demos/curl/curl
 demos/jsonc/jsonc
 demos/openssl/openssl
 demos/java-jabref/jabref
+demos/java-guava/guava
 demos/java-android-blockly/blockly-android
 demos/icecream/icecream
 demos/debian-curl/curl/
