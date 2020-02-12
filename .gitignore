@@ -26,3 +26,4 @@ demos/python-pillow/Pillow
 *.DS_Store
 container/Full*.Dockerfile
 *~
+*.swp
