@@ -25,3 +25,4 @@ demos/python-pillow/Pillow
 **/ana.yaml
 *.DS_Store
 container/Full*.Dockerfile
+*~
