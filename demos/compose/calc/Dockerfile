@@ -5,7 +5,7 @@
 FROM golang:1.12 AS goclientbuilder
 
 ARG QMSTR_REPO="https://github.com/endocode/qmstr.git"
-ARG QMSTR_BRANCH="feat/packaging"
+ARG QMSTR_BRANCH="feat/configEnvOverrideV2"
 
 RUN set -e \
   && apt update \
@@ -45,3 +45,27 @@ COPY --chown=calc /entrypoint.sh .
 VOLUME /home/calc/buildroot
 
 ENTRYPOINT ["./entrypoint.sh"]
+
+################################################################################
+# STAGE 2B: Build debug client container (with delve)                          #
+################################################################################
+
+FROM golang:1.12-buster AS debug
+
+RUN set -e && \
+  apt update && \
+  apt upgrade -y && \
+  apt install -y make gcc perl libjson-c-dev socat && \
+  go get -u github.com/go-delve/delve/cmd/dlv
+
+COPY --from=goclientbuilder /go/qmstr/out/* /usr/local/bin/
+
+RUN set -e && \
+  addgroup calc && \
+  adduser --system calc --ingroup calc
+
+WORKDIR /home/calc/
+
+COPY --chown=calc /entrypoint.sh .
+
+VOLUME /home/calc/buildroot

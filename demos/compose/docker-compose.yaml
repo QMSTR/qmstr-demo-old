@@ -1,0 +1,51 @@
+version: "3.7"
+services:
+  dgraph:
+    image: dgraph/standalone:${DGRAPH_VERSION}
+    ports:
+      - ${RATEL_PORT}:${RATEL_PORT} # 8000
+      - ${DGRAPH_PORT}:${DGRAPH_PORT} # 9080
+      - ${DGRAPH_API_PORT}:${DGRAPH_API_PORT} # 8080
+    networks:
+      - qmstr
+  master:
+    image: qmstr/master
+    build:
+      context: https://github.com/endocode/qmstr-docker.git#:qmstr-master
+      args:
+        - SCANCODE_VERSION
+        - GRPCIO_VERSION
+        - QMSTR_BRANCH=feat/configEnvOverrideV2
+    depends_on:
+      - dgraph
+    ports:
+      - ${QMSTR_PORT}:${QMSTR_PORT}
+    networks:
+      - qmstr
+    volumes:
+      - ./${DEMO_NAME}/buildroot:/home/qmstr/buildroot:ro
+      - ./${DEMO_NAME}/config:/home/qmstr/config
+    environment:
+      SERVER_DBADDRESS: dgraph:${DGRAPH_PORT}
+      SERVER_BUILDPATH: /home/qmstr/buildroot
+    command: ["--config", "./config/qmstr.yaml", "--pathsub", "${DEMO_NAME}/buildroot/,/home/qmstr/buildroot/"]
+  client:
+    build:
+      context: ./${DEMO_NAME}
+      target: client
+      args:
+        GRPCIO_VERSION: ${GRPCIO_VERSION}
+    depends_on:
+      - master
+    networks:
+      - qmstr
+    volumes:
+      - ./${DEMO_NAME}/buildroot:/home/${DEMO_NAME}/buildroot #/home/calc/buildroot"
+    environment:
+      QMSTRADDRENV: master:${QMSTR_PORT}
+      BUILDPATH: /home/${DEMO_NAME}/buildroot
+networks:
+  qmstr:
+configs:
+  master_config:
+    file: ./${DEMO_NAME}/config/qmstr.yaml

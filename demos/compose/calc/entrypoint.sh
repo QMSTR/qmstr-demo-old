@@ -1,11 +1,12 @@
 #!/bin/bash
-
 set -e
+
+IFS=':' read -ra ADDR <<< "${QMSTRADDRENV}"
 
 retries=0
 while [ $retries -le 6 ]
 do
-  nc -z master 50051
+  nc -z ${ADDR[0]} ${ADDR[1]}
   result=$?
   if [[ ${result} -eq 0 ]]
   then
@@ -29,20 +30,23 @@ cd ${BUILDPATH}
 echo "[INFO] Cleaning codebase."
 make clean
 
+echo $BUILDPATH
+echo $QMSTRADDRENV
+
 echo ""
 echo ""
 echo "###########################"
 echo "# Running Calculator demo #"
 echo "###########################"
 
-socat tcp-l:50051,fork,reuseaddr tcp:${MASTER_ADDRESS} &
-qmstrctl create package:calc --cserv ${MASTER_ADDRESS}
-qmstr run make -j4
+socat tcp-l:50051,fork,reuseaddr tcp:${QMSTRADDRENV} &
+qmstrctl create package:calc --cserv ${QMSTRADDRENV}
+qmstr run make
 
-qmstrctl connect package:calc file:libcalc.a file:calcs file:libcalc.so file:hash:$(sha1sum calc | awk '{ print $1 }') --cserv ${MASTER_ADDRESS}
+qmstrctl connect package:calc file:name:libcalc.a file:name:calcs file:name:libcalc.so file:hash:$(sha1sum calc | awk '{ print $1 }') --cserv ${QMSTRADDRENV}
 
 echo "[INFO] Build finished."
-qmstrctl analyze --verbose --cserv ${MASTER_ADDRESS}
+qmstrctl analyze --verbose --cserv ${QMSTRADDRENV}
 
 echo "[INFO] Analysis finished."
 
