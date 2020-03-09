@@ -22,7 +22,9 @@ Usage
 
 1. Run the calc demo with docker-compose:
 
-   >>>git clone THIS_REPO
+   .. code-block:: bash
+
+   git clone THIS_REPO
    cd qmstr-demo/demos/compose
    export DEMO_NAME=calc
    export COMPOSE_PROJECT_NAME=$DEMO_NAME
