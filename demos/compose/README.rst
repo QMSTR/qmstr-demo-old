@@ -20,7 +20,15 @@ Prerequisites
 Usage
 =====
 
-Something
+1. Run the calc demo with docker-compose:
+
+   >>>git clone THIS_REPO
+   cd qmstr-demo/demos/compose
+   export DEMO_NAME=calc
+   export COMPOSE_PROJECT_NAME=$DEMO_NAME
+   docker-compose up -d [--force-recreate] [--build]
+
+   The ``--force-recreate`` option is recommended if the demo is rerun to avoid orphaned state in the dgraph database. ``--build`` rebuilds any images used in the demo, regardless of whether the images are found by the docker daemon or not.
 
 .. _qmstr-docker: https://github.com/QMSTR/qmstr-docker
 .. _docker: https://docs.docker.com/install/
