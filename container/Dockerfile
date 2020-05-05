@@ -1,6 +1,6 @@
 FROM ubuntu:20.04 as demobase
 
-ENV DEBIAN_FRONTEND=noninteractive 
+ARG DEBIAN_FRONTEND=noninteractive 
 
 RUN apt-get update && apt-get install -y build-essential ccache apt-utils python-dev xz-utils zlib1g libxml2-dev libxslt1-dev bzip2
 
