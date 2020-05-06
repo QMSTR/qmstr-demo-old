@@ -1,4 +1,4 @@
-FROM ubuntu:19.10 as demobase 
+FROM python:3.6-buster as demobase 
 
 RUN apt-get update && apt-get install -y build-essential ccache apt-utils python-dev xz-utils zlib1g libxml2-dev libxslt1-dev bzip2
 
