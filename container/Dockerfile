@@ -1,6 +1,6 @@
 FROM ubuntu:19.10 as demobase 
 
-RUN apt-get update && apt-get install -y build-essential ccache apt-utils python3.7-dev bzip2 xz-utils zlib1g libxml2-dev libxslt1-dev
+RUN apt-get update && apt-get install -y build-essential ccache apt-utils python3.7 python3.7-dev bzip2 xz-utils zlib1g libxml2-dev libxslt1-dev
 
 RUN python3 --version
 
