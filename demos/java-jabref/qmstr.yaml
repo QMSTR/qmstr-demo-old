@@ -12,7 +12,7 @@ project:
     - analyzer: scancode-analyzer
       name: "Scancode Analyzer"
       config:
-        workdir: "/buildroot"
+        workdir: "/buildroot/jabref"
         resultfile: "/buildroot/scancode.json"
         # cached: "true"
     - analyzer: test-analyzer

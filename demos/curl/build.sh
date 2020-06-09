@@ -25,13 +25,13 @@ echo "Waiting for qmstr-master server"
 eval $(qmstrctl start --wait --verbose)
 echo "master server up and running"
 
-qmstrctl create package:curl --version $(cd curl && git describe --tags --dirty --long)
+qmstrctl create package:cURL --version $(cd curl && git describe --tags --dirty --long)
 
 echo "[INFO] Start curl build"
 qmstrctl --verbose spawn qmstr/curldemo qmstr run -i /tmp/inst cmake ..
 qmstrctl --verbose spawn qmstr/curldemo qmstr run -i /tmp/inst make
 
-qmstrctl connect package:curl file:curl/build/src/curl file:curl/build/lib/libcurl.so
+qmstrctl connect package:cURL file:curl/build/src/curl file:curl/build/lib/libcurl.so
 
 echo "[INFO] Build finished. Creating snapshot and triggering analysis."
 qmstrctl snapshot -O postbuild-snapshot.tar -f
