@@ -14,7 +14,7 @@ project:
       name: "Scancode Analyzer"
       trustlevel: 400
       config:
-        workdir: "/buildroot"
+        workdir: "/buildroot/Calculator"
         resultfile: "/buildroot/scancode.json"
         #cached: "true"
     - analyzer: test-analyzer
