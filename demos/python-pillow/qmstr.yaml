@@ -36,4 +36,4 @@ project:
     - reporter: package-manifest-reporter
       name: "Package manifest Reporter"
       config:
-        outputdir: "/buildroot"
+        outputDir: "/buildroot"

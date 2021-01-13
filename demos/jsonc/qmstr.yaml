@@ -38,8 +38,8 @@ project:
         #generatehtml: "no"
         siteprovider: "Endocode"
         baseurl: "http://localhost:8080/"
-        outputdir: /buildroot/
+        outputDir: /buildroot/
     - reporter: package-manifest-reporter
       name: "Package manifest Reporter"
       config:
-        outputdir: "/buildroot"
+        outputDir: "/buildroot"
